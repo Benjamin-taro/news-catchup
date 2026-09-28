@@ -1,0 +1,10 @@
+# macOS
+.DS_Store
+
+# Obsidian（個人の画面状態は追跡しない）
+.obsidian/workspace*.json
+.obsidian/cache
+.trash/
+
+# 生データ（Matcha の出力。再取得できるので追跡しない）
+inbox/
