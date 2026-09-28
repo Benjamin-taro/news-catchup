@@ -27,7 +27,8 @@ feeds:
   
 
 # Google News 検索（Matcha 内部で OR 検索 1 本のフィードになり、上限 15 件固定）
-google_news_keywords: Spring Boot,Kubernetes,Forward Deployed Engineer,Spring AI
+# 複数語は "..." で囲む（囲まないと語ごとに AND 扱いになり 0 件になる）。日本語は Google Alerts 側で拾う
+google_news_keywords: '"Forward Deployed Engineer","enterprise AI","AI in banking","AI coding"'
 
 # --- 使わない機能は明示的に無効化 ---
 instapaper: false
