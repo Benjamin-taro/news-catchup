@@ -1,0 +1,46 @@
+# Matcha 0.9.0 config (Phase 1: 集める)
+# 実行: /usr/local/bin/matcha -c ~/.config/matcha/config.yaml （launchd: com.yuki.matcha）
+# 出力: <markdown_dir_path>/YYYY-MM-DD.md （同日に再実行すると上書き再生成）
+# 注意: フィード行は「URL<半角スペース>件数」。URL 内に空白を入れないこと（空白で分割される）。
+#       件数省略時は 20。フィードは 10〜12 本まで。
+
+markdown_dir_path: "/Users/iseyuki/programming practice/news-catchup/inbox/matcha"
+database_file_path: "/Users/iseyuki/.config/matcha/matcha.db"
+
+feeds:
+  # --- 人気度プロキシ型（S/N 比が高い） ---
+  - https://hnrss.org/best 10
+  - https://b.hatena.ne.jp/hotentry/it.rss 10
+  - https://lobste.rs/rss 5
+  # --- スタック専門 ---
+  - https://spring.io/blog.atom 5
+  - https://qiita.com/tags/java/feed 5
+  - https://zenn.dev/topics/kubernetes/feed 5
+  - https://www.publickey1.jp/atom.xml 5
+  # --- 深さ枠（週 1〜数本） ---
+  - https://newsletter.pragmaticengineer.com/feed 3
+  - https://blog.bytebytego.com/feed 3
+  # --- Google Alerts の RSS（4-1 で取得したら下のコメントを外して置き換える） ---
+  # - https://www.google.com/alerts/feeds/XXXXXXXX/YYYYYYYY 5
+
+# Google News 検索（Matcha 内部で OR 検索 1 本のフィードになり、上限 15 件固定）
+google_news_keywords: Spring Boot,Kubernetes,Forward Deployed Engineer,Spring AI
+
+# --- 使わない機能は明示的に無効化 ---
+instapaper: false
+terminal_mode: false
+reading_time: false
+sunrise_sunset: false
+show_images: false
+# 天気: 緯度経度が両方 0 なら表示しない
+weather_latitude: 0
+weather_longitude: 0
+
+# LLM 要約・Analyst は使わない（絞る段階は Cowork に任せる）
+# summary_feeds / analyst_feeds / analyst_prompt を空にしておけば LLM は呼ばれない
+openai_api_key:
+openai_base_url:
+openai_model:
+summary_feeds:
+analyst_feeds:
+analyst_prompt:

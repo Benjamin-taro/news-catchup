@@ -19,6 +19,8 @@ _system/news/
   feedback-log.md     週次集計の履歴
   runlog.md           実行ログ
   prompts/            Cowork タスクの手順書
+_system/matcha/
+  config.yaml         Matcha の設定（フィード・google_news_keywords）
 inbox/matcha/         Matcha の生データ（Git 管理外）
 Digest/               日次ダイジェスト（読むのはここだけ）
 Weekly/               週次まとめ
@@ -29,3 +31,10 @@ wiki/tech/            👍 記事のトピック別蓄積
 
 - `Digest/` の当日ファイルを読み、気になったものだけ 👍 / 👎 にチェックを付ける。
 - 週 1 回、`interests.md` の「提案」欄を見て、採用するものを上のセクションに移す。
+
+## Matcha（収集）
+
+- 設定：`_system/matcha/config.yaml`（launchd の `~/Library/LaunchAgents/com.yuki.matcha.plist` がこのファイルを `-c` で指定）
+- 既読 DB：`~/.config/matcha/matcha.db`（Git 管理外。消すと既読がリセットされる）
+- ログ：`/tmp/matcha.out.log`、`/tmp/matcha.err.log`
+- 手動実行：`launchctl kickstart gui/$(id -u)/com.yuki.matcha`
