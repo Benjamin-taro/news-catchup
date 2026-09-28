@@ -9,6 +9,7 @@ SWE のホットトピックを毎朝 10 件前後の要約として Obsidian �
 |---|---|---|---|
 | 集める | launchd → Matcha | 毎日 06:00 | `inbox/matcha/YYYY-MM-DD.md` |
 | 絞る | Cowork 日次タスク（`_system/news/prompts/daily-curation.md`） | 平日 08:00 | `Digest/YYYY-MM-DD.md` |
+| 公開 | launchd → `scripts/publish.sh`（OGP 画像を埋め込んで push）→ GitHub Actions | 8:30・10:00・13:00・19:00・23:00 | https://benjamin-taro.github.io/news-catchup/ |
 | 育てる | Cowork 週次タスク（`_system/news/prompts/weekly-review.md`） | 日曜 | `Weekly/YYYY-Www.md`、`wiki/tech/` |
 
 ## ディレクトリ
@@ -38,3 +39,11 @@ wiki/tech/            👍 記事のトピック別蓄積
 - 既読 DB：`~/.config/matcha/matcha.db`（Git 管理外。消すと既読がリセットされる）
 - ログ：`/tmp/matcha.out.log`、`/tmp/matcha.err.log`
 - 手動実行：`launchctl kickstart gui/$(id -u)/com.yuki.matcha`
+
+## 公開（GitHub Pages）
+
+- `scripts/publish.sh`：`scripts/add_images.py` で Digest に OGP 画像を埋め込み、変更があれば commit・push する。
+  launchd の `~/Library/LaunchAgents/com.yuki.news-publish.plist` から 1 日 5 回実行（ログ：`/tmp/news-publish.*.log`）。
+- push されると GitHub Actions（`.github/workflows/pages.yml`）が `scripts/build_site.py` でサイトを作り、Pages に公開する。
+- 手動で公開：`launchctl kickstart gui/$(id -u)/com.yuki.news-publish`
+- ローカルでサイトを確認：`python3 scripts/build_site.py && open _site/index.html`
