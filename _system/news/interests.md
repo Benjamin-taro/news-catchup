@@ -1,22 +1,27 @@
 # Interests（ニュース選別の唯一の基準）
 
-## Core（重み 3）— 今の仕事に直結
-- Spring Boot / Spring Framework
+## Trend（重み 3）— 業界の大きな流れ・キャリアを考える材料
+- AI がエンジニアの働き方・開発のしかたをどう変えるか（議論・実例）
+- AI の企業導入・業務への組み込み（特に銀行・金融）
+- Forward Deployed Engineer／エンジニアのキャリア・組織論
+- 大手テック企業の戦略・人事・業界再編
+- 社会に影響が大きい事件（大規模なセキュリティ事故など）
+
+## Explore（重み 2）— 広げたい領域
+- AI エージェントの基盤・プロトコル（MCP、エージェント決済など）
+- 主要 LLM の新モデル・業界の力関係
+- 自動運転
+
+## Stack（重み 1）— 仕事の技術。Digest 下部の「Stack メモ」に 1 行で載せる
+- Spring Boot / Spring Framework / Spring AI
 - Java（JDK リリース、言語機能）
 - Kubernetes / OpenShift
 - Angular
 - Platform Engineering / CI/CD
-
-## Career（重み 2）— 次のキャリアを考える材料
-- Forward Deployed Engineer
-- AI in banking / fintech
-- エンジニアのキャリア・組織論
-
-## Explore（重み 1）— 広げたい領域
-- Spring AI / MCP / LLM アプリ開発
-- 自動運転
+- メジャーリリース・GA・大きな方針転換は本編に上げてよい。マイルストーン版や変更点の細かい解説は Stack メモ止まり。
 
 ## Exclude（見たくないもの）
+- 求人情報そのもの（求人から読み取れるトレンドは可）
 - 暗号資産の価格ニュース
 - ガジェットのセール・プレゼント企画
 - 「〇〇選」系のまとめ記事
