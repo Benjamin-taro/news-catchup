@@ -23,7 +23,7 @@ feeds:
   - https://newsletter.pragmaticengineer.com/feed 3
   - https://blog.bytebytego.com/feed 3
   # --- Google Alerts の RSS（4-1 で取得したら下のコメントを外して置き換える） ---
-  # - https://www.google.com/alerts/feeds/XXXXXXXX/YYYYYYYY 5   # AI × 金融のアラートを作ったらここに入れる
+  - https://www.google.com/alerts/feeds/05042959136347932292/6290204638768659933 5   # AI × 金融
   
 
 # Google News 検索（Matcha 内部で OR 検索 1 本のフィードになり、上限 15 件固定）
