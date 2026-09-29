@@ -19,7 +19,7 @@ _system/news/
   interests.md        関心キーワードと重み（唯一の設定）
   feedback-log.md     週次集計の履歴
   runlog.md           実行ログ
-  prompts/            Cowork タスクの手順書
+  prompts/            キュレーションの手順書（curate.sh が読む）
 _system/matcha/
   config.yaml         Matcha の設定（フィード・google_news_keywords）
 inbox/matcha/         Matcha の生データ（Git 管理外）
