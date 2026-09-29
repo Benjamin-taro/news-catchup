@@ -8,9 +8,9 @@ SWE のホットトピックを毎朝 10 件前後の要約として Obsidian �
 | 段階 | 実行 | 時刻 | 出力 |
 |---|---|---|---|
 | 集める | launchd → `scripts/collect.sh`（Matcha をリトライ付きで実行） | 毎日 06:00 | `inbox/matcha/YYYY-MM-DD.md` |
-| 絞る | Cowork 日次タスク（`_system/news/prompts/daily-curation.md`） | 平日 08:00 | `Digest/YYYY-MM-DD.md` |
+| 絞る | launchd → `scripts/curate.sh daily`（Claude Code を `claude -p` で起動し `_system/news/prompts/daily-curation.md` を実行） | 平日 08:00 | `Digest/YYYY-MM-DD.md` |
 | 公開 | launchd → `scripts/publish.sh`（OGP 画像を埋め込んで push）→ GitHub Actions | 8:30・10:00・13:00・19:00・23:00 | https://benjamin-taro.github.io/news-catchup/ |
-| 育てる | Cowork 週次タスク（`_system/news/prompts/weekly-review.md`） | 日曜 | `Weekly/YYYY-Www.md`、`wiki/tech/` |
+| 育てる | launchd → `scripts/curate.sh weekly`（`_system/news/prompts/weekly-review.md`） | 日曜 20:00 | `Weekly/YYYY-Www.md`、`wiki/tech/` |
 
 ## ディレクトリ
 
@@ -47,3 +47,11 @@ wiki/tech/            👍 記事のトピック別蓄積
 - push されると GitHub Actions（`.github/workflows/pages.yml`）が `scripts/build_site.py` でサイトを作り、Pages に公開する。
 - 手動で公開：`launchctl kickstart gui/$(id -u)/com.yuki.news-publish`
 - ローカルでサイトを確認：`python3 scripts/build_site.py && open _site/index.html`
+
+## キュレーション（Claude Code）
+
+- `scripts/curate.sh daily|weekly`：Claude Code を非対話モードで起動し、手順書を実行する。終わったら `scripts/publish.sh` で公開する。
+  - 許可するツールは Read / Write / Edit / Glob / Grep / WebFetch / WebSearch だけ（Bash は禁止、`--permission-mode dontAsk`）。
+- launchd：`com.yuki.news-daily`（平日 8:00）、`com.yuki.news-weekly`（日曜 20:00）。ログは `/tmp/news-daily.log`、`/tmp/news-weekly.log`。
+- 取りこぼした日や作り直したいとき：`launchctl kickstart gui/$(id -u)/com.yuki.news-daily`
+  （その日の Digest がすでにあれば skip する。作り直すときは先に `Digest/YYYY-MM-DD.md` を消す）
