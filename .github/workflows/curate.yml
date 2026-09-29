@@ -7,11 +7,11 @@ on:
   workflow_dispatch:
     inputs:
       kind:
-        description: "daily or weekly"
+        description: "daily / weekly / check（認証と起動の確認だけ）"
         required: true
         default: daily
         type: choice
-        options: [daily, weekly]
+        options: [daily, weekly, check]
 
 permissions:
   contents: write
@@ -42,14 +42,22 @@ jobs:
           fi
       - name: Install Claude Code
         run: npm install -g @anthropic-ai/claude-code
+      - name: Check auth only
+        if: steps.kind.outputs.kind == 'check'
+        env:
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+        run: claude -p "動作確認です。「OK」とだけ返してください。" --allowedTools "Read"
       - name: Run curation
+        if: steps.kind.outputs.kind != 'check'
         env:
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
         run: scripts/curate.sh "${{ steps.kind.outputs.kind }}"
       - name: Add images
+        if: steps.kind.outputs.kind != 'check'
         run: python3 scripts/add_images.py
       - name: Commit
         id: commit
+        if: steps.kind.outputs.kind != 'check'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898+github-actions[bot]@users.noreply.github.com"
