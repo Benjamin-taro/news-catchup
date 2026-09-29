@@ -14,7 +14,6 @@ feeds:
   - https://lobste.rs/rss 5
   # --- スタック専門 ---
   - https://spring.io/blog.atom 5
-  - https://qiita.com/tags/java/feed 5
   - https://zenn.dev/topics/kubernetes/feed 5
   - https://www.publickey1.jp/atom.xml 5
   - https://inside.java/feed.xml 3
@@ -22,6 +21,8 @@ feeds:
   # --- 深さ枠（週 1〜数本） ---
   - https://newsletter.pragmaticengineer.com/feed 3
   - https://blog.bytebytego.com/feed 3
+  # --- X（旧 Twitter）の話題の投稿：Google News の site:x.com 検索、直近 2 日 ---
+  - https://news.google.com/rss/search?q=site%3Ax.com%20%28AI%20OR%20%E7%94%9F%E6%88%90AI%20OR%20Claude%20OR%20ChatGPT%20OR%20Codex%29%20%28%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%20OR%20%E9%96%8B%E7%99%BA%20OR%20%E6%A5%AD%E5%8B%99%20OR%20%E4%BB%95%E4%BA%8B%29%20when%3A2d&hl=ja&gl=JP&ceid=JP:ja 10
   # --- Google Alerts の RSS（4-1 で取得したら下のコメントを外して置き換える） ---
   - https://www.google.com/alerts/feeds/05042959136347932292/6290204638768659933 5   # AI × 金融
   
