@@ -435,11 +435,17 @@ def render_item(it: Item) -> str:
         foot.append('<div class="meta">' + "".join(meta) + "</div>")
     if foot:
         p.append('<footer class="card-foot">' + "".join(foot) + "</footer>")
+    # 👍/👎 ボタン。GitHub トークンを登録したブラウザでだけ vote.js が表示する
+    p.append(f'<div class="vote-bar" data-rank="{it.rank}" hidden>'
+             '<button type="button" class="vote-btn" data-vote="👍" aria-pressed="false">👍 <span>Good</span></button>'
+             '<button type="button" class="vote-btn" data-vote="👎" aria-pressed="false">👎 <span>Bad</span></button>'
+             "</div>")
     p.append("</div></article>")
     return "\n".join(p)
 
 
-def page(title: str, body: str, description: str = "") -> str:
+def page(title: str, body: str, description: str = "", digest_path: str = "") -> str:
+    vote = (f'<script src="vote.js" data-digest="{esc(digest_path)}" defer></script>' if digest_path else "")
     return f"""<!doctype html>
 <html lang="ja">
 <head>
@@ -462,7 +468,8 @@ def page(title: str, body: str, description: str = "") -> str:
 <main class="wrap">
 {body}
 </main>
-<footer class="site-footer"><div class="wrap">Generated {esc(dt.datetime.now().strftime('%Y-%m-%d %H:%M'))} · <a href="index.html">一覧へ</a></div></footer>
+<footer class="site-footer"><div class="wrap">Generated {esc(dt.datetime.now().strftime('%Y-%m-%d %H:%M'))} · <a href="index.html">一覧へ</a> · <a href="settings.html">👍/👎 の設定</a></div></footer>
+{vote}
 </body>
 </html>
 """
@@ -515,7 +522,7 @@ def render_day(d: Digest, prev: Digest | None, nxt: Digest | None) -> str:
         b.append('<div class="notice"><p>この日のダイジェストは空です。</p></div>')
     b.append(day_nav(prev, nxt))
     heads = " / ".join(strip_inline(i.title) for i in d.items[:3])
-    return page(f"{d.date.isoformat()} | {SITE_TITLE}", "\n".join(b), heads)
+    return page(f"{d.date.isoformat()} | {SITE_TITLE}", "\n".join(b), heads, f"Digest/{d.date.isoformat()}.md")
 
 
 def render_index(digests: list[Digest], weeklies: list[tuple[str, str]]) -> str:
@@ -571,6 +578,27 @@ def render_weekly(name: str, path: Path) -> str:
 # main
 # ---------------------------------------------------------------------------
 
+def render_settings() -> str:
+    body = """<section class="hero"><p class="eyebrow">Settings</p><h1>👍/👎 の設定</h1></section>
+<div class="settings">
+<p>この端末で 👍/👎 を押せるようにするには、GitHub のトークンを登録します。トークンはこのブラウザの中にだけ保存され、GitHub 以外には送られません。</p>
+<ol>
+<li>GitHub → Settings → Developer settings → <b>Fine-grained tokens</b> → Generate new token</li>
+<li>Repository access：<b>Only select repositories</b> → <code>news-catchup</code></li>
+<li>Permissions → Repository permissions → <b>Contents：Read and write</b>（ほかは不要）</li>
+<li>発行された <code>github_pat_…</code> を下に貼って保存</li>
+</ol>
+<form id="token-form">
+<input id="token-input" type="password" autocomplete="off" placeholder="github_pat_..." aria-label="GitHub トークン">
+<div class="settings-actions"><button type="submit" class="vote-btn">保存して確認</button>
+<button type="button" id="token-clear" class="vote-btn">この端末から削除</button></div>
+</form>
+<p id="token-status" class="token-status" role="status"></p>
+</div>"""
+    return page(f"設定 | {SITE_TITLE}", body, "👍/👎 ボタンの設定").replace(
+        "</body>", '<script src="vote.js" data-settings="1" defer></script>\n</body>')
+
+
 def build(root: Path, out: Path) -> list[Digest]:
     digest_dir = root / "Digest"
     weekly_dir = root / "Weekly"
@@ -592,6 +620,8 @@ def build(root: Path, out: Path) -> list[Digest]:
         shutil.rmtree(out)
     out.mkdir(parents=True)
     shutil.copyfile(css_src, out / "style.css")
+    shutil.copyfile(css_src.parent / "vote.js", out / "vote.js")
+    (out / "settings.html").write_text(render_settings(), encoding="utf-8")
     (out / ".nojekyll").write_text("", encoding="utf-8")
 
     for i, d in enumerate(digests):

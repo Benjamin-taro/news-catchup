@@ -221,3 +221,26 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 24px 0; }
   .explore { margin-left: calc(var(--gutter) * -1); margin-right: calc(var(--gutter) * -1); border-radius: 0; border-left: 0; border-right: 0; }
   .day-nav { font-size: .8rem; }
 }
+
+/* ---- 👍/👎 ボタン（vote.js） ---- */
+.vote-bar { display: flex; gap: .5rem; margin-top: .9rem; }
+.vote-bar[hidden] { display: none; }
+.vote-btn {
+  font: inherit; font-size: .9rem; cursor: pointer;
+  padding: .45rem .9rem; border-radius: 999px;
+  border: 1px solid var(--line, #d8d4cc); background: transparent; color: inherit;
+  min-height: 40px;
+}
+.vote-btn[aria-pressed="true"] { background: var(--accent, #c2410c); border-color: var(--accent, #c2410c); color: #fff; }
+.vote-btn:disabled { opacity: .5; cursor: progress; }
+.vote-toast {
+  position: fixed; left: 50%; bottom: 1.2rem; transform: translateX(-50%);
+  background: #222; color: #fff; padding: .6rem 1rem; border-radius: 10px;
+  font-size: .9rem; z-index: 10; max-width: calc(100vw - 32px);
+}
+.settings { max-width: 640px; line-height: 1.8; }
+.settings code { font-size: .85em; }
+#token-input { width: 100%; box-sizing: border-box; font: inherit; padding: .6rem .8rem; border-radius: 8px;
+  border: 1px solid var(--line, #d8d4cc); background: transparent; color: inherit; margin: .8rem 0 .6rem; }
+.settings-actions { display: flex; gap: .5rem; flex-wrap: wrap; }
+.token-status { margin-top: .8rem; font-weight: 500; }
