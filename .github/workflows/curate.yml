@@ -2,8 +2,12 @@ name: Curate digest (Claude Code)
 
 on:
   schedule:
-    - cron: "0 23 * * 0-4"   # 平日 08:00 JST（UTC では前日の日〜木）
-    - cron: "0 11 * * 0"     # 日曜 20:00 JST
+    # ロンドン時間の平日 08:00（daily）と日曜 20:00（weekly）。夏時間・冬時間の 2 本ずつ置き、
+    # scripts/tz_gate.sh でロンドン時間の目的の時刻にあたるほうだけを実行する
+    - cron: "0 7 * * 1-5"
+    - cron: "0 8 * * 1-5"
+    - cron: "0 19 * * 0"
+    - cron: "0 20 * * 0"
   workflow_dispatch:
     inputs:
       kind:
@@ -22,7 +26,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  TZ: Asia/Tokyo
+  TZ: Europe/London
 
 jobs:
   curate:
@@ -33,14 +37,16 @@ jobs:
       - name: Decide kind
         id: kind
         run: |
+          sched="${{ github.event.schedule }}"
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "kind=${{ inputs.kind }}" >> "$GITHUB_OUTPUT"
-          elif [ "${{ github.event.schedule }}" = "0 11 * * 0" ]; then
-            echo "kind=weekly" >> "$GITHUB_OUTPUT"
+          elif [[ "$sched" == *" * * 0" ]]; then
+            scripts/tz_gate.sh "$sched" 20 && grep -q "run=true" "$GITHUB_OUTPUT" && echo "kind=weekly" >> "$GITHUB_OUTPUT" || echo "kind=skip" >> "$GITHUB_OUTPUT"
           else
-            echo "kind=daily" >> "$GITHUB_OUTPUT"
+            scripts/tz_gate.sh "$sched" 8 && grep -q "run=true" "$GITHUB_OUTPUT" && echo "kind=daily" >> "$GITHUB_OUTPUT" || echo "kind=skip" >> "$GITHUB_OUTPUT"
           fi
       - name: Install Claude Code
+        if: steps.kind.outputs.kind != 'skip'
         run: npm install -g @anthropic-ai/claude-code
       - name: Check auth only
         if: steps.kind.outputs.kind == 'check'
@@ -48,16 +54,16 @@ jobs:
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
         run: claude -p "動作確認です。「OK」とだけ返してください。" --allowedTools "Read"
       - name: Run curation
-        if: steps.kind.outputs.kind != 'check'
+        if: steps.kind.outputs.kind != 'check' && steps.kind.outputs.kind != 'skip'
         env:
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
         run: scripts/curate.sh "${{ steps.kind.outputs.kind }}"
       - name: Add images
-        if: steps.kind.outputs.kind != 'check'
+        if: steps.kind.outputs.kind != 'check' && steps.kind.outputs.kind != 'skip'
         run: python3 scripts/add_images.py
       - name: Commit
         id: commit
-        if: steps.kind.outputs.kind != 'check'
+        if: steps.kind.outputs.kind != 'check' && steps.kind.outputs.kind != 'skip'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898+github-actions[bot]@users.noreply.github.com"

@@ -7,10 +7,10 @@ SWE のホットトピックを毎朝 10 件前後の要約として Obsidian �
 
 | 段階 | 実行 | 時刻 | 出力 |
 |---|---|---|---|
-| 集める | launchd → `scripts/collect.sh`（Matcha をリトライ付きで実行） | 毎日 06:00 | `inbox/matcha/YYYY-MM-DD.md` |
-| 絞る | launchd → `scripts/curate.sh daily`（Claude Code を `claude -p` で起動し `_system/news/prompts/daily-curation.md` を実行） | 平日 08:00 | `Digest/YYYY-MM-DD.md` |
+| 集める | launchd → `scripts/collect.sh`（Matcha をリトライ付きで実行） | 毎日 06:00（ロンドン時間） | `inbox/matcha/YYYY-MM-DD.md` |
+| 絞る | launchd → `scripts/curate.sh daily`（Claude Code を `claude -p` で起動し `_system/news/prompts/daily-curation.md` を実行） | 平日 08:00（ロンドン時間） | `Digest/YYYY-MM-DD.md` |
 | 公開 | launchd → `scripts/publish.sh`（OGP 画像を埋め込んで push）→ GitHub Actions | 8:30・10:00・13:00・19:00・23:00 | https://benjamin-taro.github.io/news-catchup/ |
-| 育てる | launchd → `scripts/curate.sh weekly`（`_system/news/prompts/weekly-review.md`） | 日曜 20:00 | `Weekly/YYYY-Www.md`、`wiki/tech/` |
+| 育てる | launchd → `scripts/curate.sh weekly`（`_system/news/prompts/weekly-review.md`） | 日曜 20:00（ロンドン時間） | `Weekly/YYYY-Www.md`、`wiki/tech/` |
 
 ## ディレクトリ
 
