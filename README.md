@@ -5,12 +5,13 @@ SWE のホットトピックを毎朝 10 件前後の要約として Obsidian �
 
 ## 流れ
 
-| 段階 | 実行 | 時刻 | 出力 |
+| 段階 | 実行（GitHub Actions。Mac は不要） | 時刻（ロンドン時間） | 出力 |
 |---|---|---|---|
-| 集める | launchd → `scripts/collect.sh`（Matcha をリトライ付きで実行） | 毎日 06:00（ロンドン時間） | `inbox/matcha/YYYY-MM-DD.md` |
-| 絞る | launchd → `scripts/curate.sh daily`（Claude Code を `claude -p` で起動し `_system/news/prompts/daily-curation.md` を実行） | 毎日 08:00（ロンドン時間） | `Digest/YYYY-MM-DD.md` |
-| 公開 | launchd → `scripts/publish.sh`（OGP 画像を埋め込んで push）→ GitHub Actions | 8:30・10:00・13:00・19:00・23:00 | https://benjamin-taro.github.io/news-catchup/ |
-| 育てる | launchd → `scripts/curate.sh weekly`（`_system/news/prompts/weekly-review.md`） | 日曜 20:00（ロンドン時間） | `Weekly/YYYY-Www.md`、`wiki/tech/` |
+| 集める | `collect.yml` → `scripts/collect.sh`（Matcha をリトライ付きで実行） | 毎日 06:00 | `inbox/matcha/YYYY-MM-DD.md` |
+| 絞る | `curate.yml` → `scripts/curate.sh daily`（Claude Code が `daily-curation.md` を実行）→ 画像埋め込み → Pages 公開 | 毎日 08:00 | `Digest/YYYY-MM-DD.md` |
+| 育てる | `curate.yml` → `scripts/curate.sh weekly`（`weekly-review.md`） | 日曜 20:00 | `Weekly/YYYY-Www.md`、`wiki/tech/` |
+| 👍/👎 | サイトのボタン（`site-src/vote.js`）が GitHub の Digest を直接書き換える | いつでも | https://benjamin-taro.github.io/news-catchup/ |
+| Obsidian 同期 | Mac の launchd → `scripts/publish.sh`（pull と、Obsidian での 👍/👎 の push） | 8:30・10:00・13:00・19:00・23:00 | — |
 
 ## ディレクトリ
 
