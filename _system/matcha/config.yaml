@@ -1,11 +1,12 @@
 # Matcha 0.9.0 config (Phase 1: 集める)
-# 実行: scripts/collect.sh が matcha -c でこのファイルを読む（launchd: com.yuki.matcha）
+# 実行: scripts/collect.sh が matcha -c でこのファイルを読む（GitHub Actions: .github/workflows/collect.yml）
+# パスはリポジトリのルートからの相対パス（collect.sh がルートに cd してから実行する）
 # 出力: <markdown_dir_path>/YYYY-MM-DD.md （同日に再実行すると上書き再生成）
 # 注意: フィード行は「URL<半角スペース>件数」。URL 内に空白を入れないこと（空白で分割される）。
 #       件数省略時は 20。フィードは 10〜12 本まで。
 
-markdown_dir_path: "/Users/iseyuki/programming practice/news-catchup/inbox/matcha"
-database_file_path: "/Users/iseyuki/.config/matcha/matcha.db"
+markdown_dir_path: "inbox/matcha"
+database_file_path: "_system/matcha/matcha.db"
 
 feeds:
   # --- 人気度プロキシ型（S/N 比が高い） ---

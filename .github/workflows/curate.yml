@@ -1,0 +1,66 @@
+name: Curate digest (Claude Code)
+
+on:
+  schedule:
+    - cron: "0 23 * * 0-4"   # 平日 08:00 JST（UTC では前日の日〜木）
+    - cron: "0 11 * * 0"     # 日曜 20:00 JST
+  workflow_dispatch:
+    inputs:
+      kind:
+        description: "daily or weekly"
+        required: true
+        default: daily
+        type: choice
+        options: [daily, weekly]
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: vault-write
+  cancel-in-progress: false
+
+env:
+  TZ: Asia/Tokyo
+
+jobs:
+  curate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decide kind
+        id: kind
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "kind=${{ inputs.kind }}" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.event.schedule }}" = "0 11 * * 0" ]; then
+            echo "kind=weekly" >> "$GITHUB_OUTPUT"
+          else
+            echo "kind=daily" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Install Claude Code
+        run: npm install -g @anthropic-ai/claude-code
+      - name: Run curation
+        env:
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+        run: scripts/curate.sh "${{ steps.kind.outputs.kind }}"
+      - name: Add images
+        run: python3 scripts/add_images.py
+      - name: Commit
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898+github-actions[bot]@users.noreply.github.com"
+          git add Digest Weekly wiki _system/news
+          git diff --cached --quiet && exit 0
+          git commit -m "Curate ${{ steps.kind.outputs.kind }} $(date +%F)"
+          for i in 1 2 3; do git pull --rebase -q && git push -q && echo "pushed=1" >> "$GITHUB_OUTPUT" && exit 0; sleep 5; done
+          exit 1
+      # GITHUB_TOKEN での push は他のワークフローを起動しないので、Pages のデプロイを明示的に呼ぶ
+      - name: Deploy site
+        if: steps.commit.outputs.pushed == '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main

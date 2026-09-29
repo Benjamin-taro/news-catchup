@@ -8,7 +8,7 @@ CONFIG="_system/matcha/config.yaml"
 BEST=$(mktemp); best_n=-1
 
 for attempt in 1 2 3; do
-  err=$(/usr/local/bin/matcha -c "$CONFIG" 2>&1 >/dev/null)
+  err=$("${MATCHA:-matcha}" -c "$CONFIG" 2>&1 >/dev/null)
   [ -n "$err" ] && echo "$err" >&2
   n=$(grep -c '](http' "$OUT" 2>/dev/null || echo 0)
   echo "$(date '+%F %T') attempt $attempt: $n items"
