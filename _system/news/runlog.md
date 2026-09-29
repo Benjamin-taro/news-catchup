@@ -11,3 +11,4 @@
 2026-09-28 | 入力 75 件 | 前処理後 48 件 | 採用 10 件 | 警告: なし（Claude Code で手動の試行。Google News の OpenAI DeployCo 記事は 5 月の発表だったため除外）
 2026-09-28 | 再生成（基準を Trend 重視に変更） | 入力 75 件 | 採用 10 件 + Stack メモ 3 件 | 警告: なし
 2026-09-29 | 入力 27 件 | 前処理後 20 件 | 採用 9 件（本編 7 + Explore 2）+ Stack メモ 2 件 | 警告: 06:00 に Google News が 404・再実行で HN が通信エラー（手動で取り直し済み）。収集を scripts/collect.sh（リトライ付き）に変更
+2026-09-29 skip: already done
