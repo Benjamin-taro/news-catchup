@@ -1,5 +1,5 @@
 # Matcha 0.9.0 config (Phase 1: 集める)
-# 実行: /usr/local/bin/matcha -c ~/.config/matcha/config.yaml （launchd: com.yuki.matcha）
+# 実行: scripts/collect.sh が matcha -c でこのファイルを読む（launchd: com.yuki.matcha）
 # 出力: <markdown_dir_path>/YYYY-MM-DD.md （同日に再実行すると上書き再生成）
 # 注意: フィード行は「URL<半角スペース>件数」。URL 内に空白を入れないこと（空白で分割される）。
 #       件数省略時は 20。フィードは 10〜12 本まで。

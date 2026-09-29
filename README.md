@@ -7,7 +7,7 @@ SWE のホットトピックを毎朝 10 件前後の要約として Obsidian �
 
 | 段階 | 実行 | 時刻 | 出力 |
 |---|---|---|---|
-| 集める | launchd → Matcha | 毎日 06:00 | `inbox/matcha/YYYY-MM-DD.md` |
+| 集める | launchd → `scripts/collect.sh`（Matcha をリトライ付きで実行） | 毎日 06:00 | `inbox/matcha/YYYY-MM-DD.md` |
 | 絞る | Cowork 日次タスク（`_system/news/prompts/daily-curation.md`） | 平日 08:00 | `Digest/YYYY-MM-DD.md` |
 | 公開 | launchd → `scripts/publish.sh`（OGP 画像を埋め込んで push）→ GitHub Actions | 8:30・10:00・13:00・19:00・23:00 | https://benjamin-taro.github.io/news-catchup/ |
 | 育てる | Cowork 週次タスク（`_system/news/prompts/weekly-review.md`） | 日曜 | `Weekly/YYYY-Www.md`、`wiki/tech/` |
@@ -38,7 +38,7 @@ wiki/tech/            👍 記事のトピック別蓄積
 - 設定：`_system/matcha/config.yaml`（launchd の `~/Library/LaunchAgents/com.yuki.matcha.plist` がこのファイルを `-c` で指定）
 - 既読 DB：`~/.config/matcha/matcha.db`（Git 管理外。消すと既読がリセットされる）
 - ログ：`/tmp/matcha.out.log`、`/tmp/matcha.err.log`
-- 手動実行：`launchctl kickstart gui/$(id -u)/com.yuki.matcha`
+- 手動実行：`launchctl kickstart gui/$(id -u)/com.yuki.matcha`（`scripts/collect.sh` 経由。取得エラーがあれば最大 3 回取り直し、件数が最も多い結果を残す）
 
 ## 公開（GitHub Pages）
 
