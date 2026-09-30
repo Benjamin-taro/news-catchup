@@ -13,3 +13,4 @@
 2026-09-29 | 入力 27 件 | 前処理後 20 件 | 採用 9 件（本編 7 + Explore 2）+ Stack メモ 2 件 | 警告: 06:00 に Google News が 404・再実行で HN が通信エラー（手動で取り直し済み）。収集を scripts/collect.sh（リトライ付き）に変更
 2026-09-29 skip: already done
 2026-09-29 skip: already done
+2026-09-30 | 入力 28 件 | 前処理後 17 件 | 採用 10 件（本編 8 + Explore 2）+ Stack メモ 1 件 | 警告: なし（Computer Weekly は Google News のリダイレクトを開けず、Web 検索で内容を確認。Stack の該当記事が少ない）
