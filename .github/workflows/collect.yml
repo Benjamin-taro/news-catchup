@@ -2,14 +2,16 @@ name: Collect feeds (Matcha)
 
 on:
   schedule:
-    # ロンドン時間 06:00。cron は UTC 固定なので、夏時間（BST）用と冬時間（GMT）用の 2 本を置き、
-    # scripts/tz_gate.sh で「ロンドン時間で 6 時にあたるほう」だけを実行する
-    - cron: "0 5 * * *"
-    - cron: "0 6 * * *"
+    # ロンドン時間 05:17。cron は UTC 固定なので、夏時間（BST）用と冬時間（GMT）用の 2 本を置き、
+    # scripts/tz_gate.sh で「ロンドン時間で 5 時台にあたるほう」だけを実行する。
+    # 毎時 0 分は GitHub 側が混雑して数時間遅れることがあるので、分をずらしている
+    - cron: "17 4 * * *"
+    - cron: "17 5 * * *"
   workflow_dispatch:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: vault-write
@@ -26,7 +28,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Time zone gate
         id: gate
-        run: scripts/tz_gate.sh "${{ github.event.schedule }}" 6
+        run: scripts/tz_gate.sh "${{ github.event.schedule }}" 5
       - name: Install Matcha
         if: steps.gate.outputs.run == 'true'
         run: |
@@ -46,3 +48,9 @@ jobs:
           git commit -m "Collect $(date +%F)"
           for i in 1 2 3; do git pull --rebase -q && git push -q && exit 0; sleep 5; done
           exit 1
+      # 収集が終わったら、そのまま Digest 作成を呼ぶ（別々の cron だと遅延で順番が逆になることがある）
+      - name: Trigger daily curation
+        if: steps.gate.outputs.run == 'true' && github.event_name == 'schedule'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run curate.yml --ref main -f kind=daily

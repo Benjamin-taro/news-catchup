@@ -2,12 +2,13 @@ name: Curate digest (Claude Code)
 
 on:
   schedule:
-    # ロンドン時間の毎日 08:00（daily）と日曜 20:00（weekly）。夏時間・冬時間の 2 本ずつ置き、
-    # scripts/tz_gate.sh でロンドン時間の目的の時刻にあたるほうだけを実行する
-    - cron: "0 7 * * *"
-    - cron: "0 8 * * *"
-    - cron: "0 19 * * 0"
-    - cron: "0 20 * * 0"
+    # 通常は collect.yml が収集後にこのワークフローを呼ぶ。下の daily cron はその保険（ロンドン時間 07:37）。
+    # weekly はロンドン時間の日曜 20:07。夏時間・冬時間の 2 本ずつ置き、scripts/tz_gate.sh で片方だけ動かす。
+    # 毎時 0 分は GitHub 側が混雑して遅れやすいので、分をずらしている
+    - cron: "37 6 * * *"
+    - cron: "37 7 * * *"
+    - cron: "7 19 * * 0"
+    - cron: "7 20 * * 0"
   workflow_dispatch:
     inputs:
       kind:
@@ -43,8 +44,18 @@ jobs:
           elif [[ "$sched" == *" * * 0" ]]; then
             scripts/tz_gate.sh "$sched" 20 && grep -q "run=true" "$GITHUB_OUTPUT" && echo "kind=weekly" >> "$GITHUB_OUTPUT" || echo "kind=skip" >> "$GITHUB_OUTPUT"
           else
-            scripts/tz_gate.sh "$sched" 8 && grep -q "run=true" "$GITHUB_OUTPUT" && echo "kind=daily" >> "$GITHUB_OUTPUT" || echo "kind=skip" >> "$GITHUB_OUTPUT"
+            scripts/tz_gate.sh "$sched" 7 && grep -q "run=true" "$GITHUB_OUTPUT" && echo "kind=daily" >> "$GITHUB_OUTPUT" || echo "kind=skip" >> "$GITHUB_OUTPUT"
           fi
+      # 今日の収集データがまだなければ（収集の遅延・失敗）、先に収集する
+      - name: Ensure today's input
+        if: steps.kind.outputs.kind == 'daily'
+        run: |
+          f="inbox/matcha/$(date +%F).md"
+          [ -f "$f" ] && { echo "input exists: $f"; exit 0; }
+          echo "input missing: $f → collecting now"
+          curl -sSL -o /usr/local/bin/matcha "https://github.com/piqoni/matcha/releases/download/v0.9.0/matcha-linux-amd64"
+          chmod +x /usr/local/bin/matcha
+          scripts/collect.sh
       - name: Install Claude Code
         if: steps.kind.outputs.kind != 'skip'
         run: npm install -g @anthropic-ai/claude-code
@@ -67,7 +78,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898+github-actions[bot]@users.noreply.github.com"
-          git add Digest Weekly wiki _system/news
+          git add Digest Weekly wiki _system/news inbox _system/matcha/matcha.db
           git diff --cached --quiet && exit 0
           git commit -m "Curate ${{ steps.kind.outputs.kind }} $(date +%F)"
           for i in 1 2 3; do git pull --rebase -q && git push -q && echo "pushed=1" >> "$GITHUB_OUTPUT" && exit 0; sleep 5; done
