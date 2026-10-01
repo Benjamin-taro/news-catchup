@@ -2,13 +2,12 @@ name: Curate digest (Claude Code)
 
 on:
   schedule:
-    # 通常は collect.yml が収集後にこのワークフローを呼ぶ。下の daily cron はその保険（ロンドン時間 07:37）。
-    # weekly はロンドン時間の日曜 20:07。夏時間・冬時間の 2 本ずつ置き、scripts/tz_gate.sh で片方だけ動かす。
-    # 毎時 0 分は GitHub 側が混雑して遅れやすいので、分をずらしている
-    - cron: "37 6 * * *"
-    - cron: "37 7 * * *"
-    - cron: "7 19 * * 0"
-    - cron: "7 20 * * 0"
+    # GitHub の定期実行は数時間遅れたり飛ばされたりするので、1 回に頼らず何度も確認する。
+    # daily：UTC 4:37〜12:37 の毎時（ロンドン時間の朝〜昼）。今日の Digest がまだなければ作る。
+    # weekly：UTC 19:07〜23:07 の毎時（日曜）。ロンドン時間 20 時以降で、今週の Weekly がまだなければ作る。
+    # 作成済みなら確認だけで終わる（Claude は起動しない）
+    - cron: "37 4-12 * * *"
+    - cron: "7 19-23 * * 0"
   workflow_dispatch:
     inputs:
       kind:
@@ -40,12 +39,17 @@ jobs:
         run: |
           sched="${{ github.event.schedule }}"
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "kind=${{ inputs.kind }}" >> "$GITHUB_OUTPUT"
-          elif [[ "$sched" == *" * * 0" ]]; then
-            scripts/tz_gate.sh "$sched" 20 && grep -q "run=true" "$GITHUB_OUTPUT" && echo "kind=weekly" >> "$GITHUB_OUTPUT" || echo "kind=skip" >> "$GITHUB_OUTPUT"
+            kind="${{ inputs.kind }}"
+          elif [ "$sched" = "7 19-23 * * 0" ]; then
+            week=$(date +%G-W%V)
+            if [ "$(date +%u)" != 7 ] || [ "$(date +%H)" -lt 20 ]; then kind=skip; echo "まだ日曜 20 時前"
+            elif [ -f "Weekly/$week.md" ]; then kind=skip; echo "Weekly/$week.md は作成済み"
+            else kind=weekly; fi
           else
-            scripts/tz_gate.sh "$sched" 7 && grep -q "run=true" "$GITHUB_OUTPUT" && echo "kind=daily" >> "$GITHUB_OUTPUT" || echo "kind=skip" >> "$GITHUB_OUTPUT"
+            if [ -f "Digest/$(date +%F).md" ]; then kind=skip; echo "Digest/$(date +%F).md は作成済み"
+            else kind=daily; fi
           fi
+          echo "kind=$kind" >> "$GITHUB_OUTPUT"; echo "kind=$kind"
       # 今日の収集データがまだなければ（収集の遅延・失敗）、先に収集する
       - name: Ensure today's input
         if: steps.kind.outputs.kind == 'daily'

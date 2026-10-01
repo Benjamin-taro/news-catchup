@@ -1,12 +1,8 @@
 name: Collect feeds (Matcha)
 
 on:
-  schedule:
-    # ロンドン時間 05:17。cron は UTC 固定なので、夏時間（BST）用と冬時間（GMT）用の 2 本を置き、
-    # scripts/tz_gate.sh で「ロンドン時間で 5 時台にあたるほう」だけを実行する。
-    # 毎時 0 分は GitHub 側が混雑して数時間遅れることがあるので、分をずらしている
-    - cron: "17 4 * * *"
-    - cron: "17 5 * * *"
+  # 通常の収集は curate.yml が「今日の収集データがなければ先に集める」形で行う。
+  # このワークフローは手動で取り直したいとき用
   workflow_dispatch:
 
 permissions:
@@ -48,9 +44,3 @@ jobs:
           git commit -m "Collect $(date +%F)"
           for i in 1 2 3; do git pull --rebase -q && git push -q && exit 0; sleep 5; done
           exit 1
-      # 収集が終わったら、そのまま Digest 作成を呼ぶ（別々の cron だと遅延で順番が逆になることがある）
-      - name: Trigger daily curation
-        if: steps.gate.outputs.run == 'true' && github.event_name == 'schedule'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh workflow run curate.yml --ref main -f kind=daily
