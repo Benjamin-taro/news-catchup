@@ -15,3 +15,4 @@
 2026-09-29 skip: already done
 2026-09-30 | 入力 28 件 | 前処理後 17 件 | 採用 10 件（本編 8 + Explore 2）+ Stack メモ 1 件 | 警告: なし（Computer Weekly は Google News のリダイレクトを開けず、Web 検索で内容を確認。Stack の該当記事が少ない）
 2026-10-01 | 入力 60 件 | 前処理後 30 件 | 採用 10 件（本編 8 + Explore 2）+ Stack メモ 3 件 | 警告: なし（Google News のリダイレクトは開けず、Norvig 記事は本文未確認で「見出しより」扱い。SMBC Olive 72% の記事は 9 月上旬の発表のため除外）
+2026-10-02 | 入力 60 件 | 前処理後 30 件 | 採用 10 件（本編 8 + Explore 2）+ Stack メモ 2 件 | 警告: なし（47news・Reuters・朝鮮日報は取得不可。ヤマトは Web 検索、Accenture は Web 検索で確認。Stack メモ 2 件は本文確認の対象外で、JEP 540 は詳細未確認）
