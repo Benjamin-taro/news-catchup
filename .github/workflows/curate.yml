@@ -48,6 +48,7 @@ jobs:
             kind="${{ inputs.kind }}"
             if [ "${{ inputs.force }}" != "true" ]; then
               if [ "$kind" = daily ] && [ -f "Digest/$(date +%F).md" ]; then kind=skip; echo "Digest/$(date +%F).md は作成済み"; fi
+              if [ "$kind" = weekly ] && { [ "$(date +%u)" != 7 ] || [ "$(date +%H)" -lt 20 ]; }; then kind=skip; echo "週次は日曜 20 時以降のみ（force=true で強制実行）"; fi
               if [ "$kind" = weekly ] && [ -f "Weekly/$(date +%G-W%V).md" ]; then kind=skip; echo "Weekly/$(date +%G-W%V).md は作成済み"; fi
             fi
           elif [ "$sched" = "7 19-23 * * 0" ]; then
