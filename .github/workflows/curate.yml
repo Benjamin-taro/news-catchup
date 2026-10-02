@@ -16,6 +16,11 @@ on:
         default: daily
         type: choice
         options: [daily, weekly, check]
+      force:
+        description: "作成済みでも作り直す（先に既存ファイルを消しておくこと）"
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   contents: write
@@ -39,7 +44,12 @@ jobs:
         run: |
           sched="${{ github.event.schedule }}"
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            # cron-job.org などの外部起動。作成済みならスキップ（force=true なら実行）
             kind="${{ inputs.kind }}"
+            if [ "${{ inputs.force }}" != "true" ]; then
+              if [ "$kind" = daily ] && [ -f "Digest/$(date +%F).md" ]; then kind=skip; echo "Digest/$(date +%F).md は作成済み"; fi
+              if [ "$kind" = weekly ] && [ -f "Weekly/$(date +%G-W%V).md" ]; then kind=skip; echo "Weekly/$(date +%G-W%V).md は作成済み"; fi
+            fi
           elif [ "$sched" = "7 19-23 * * 0" ]; then
             week=$(date +%G-W%V)
             if [ "$(date +%u)" != 7 ] || [ "$(date +%H)" -lt 20 ]; then kind=skip; echo "まだ日曜 20 時前"
