@@ -22,16 +22,24 @@ feeds:
   # --- 深さ枠（週 1〜数本） ---
   - https://newsletter.pragmaticengineer.com/feed 3
   - https://blog.bytebytego.com/feed 3
+  # --- 銀行業界・金融テック・リーガルテック（2026-10 追加）---
+  - https://www.finextra.com/rss/headlines.aspx 4
+  - https://www.bankingdive.com/feeds/news/ 3
+  - https://www.artificiallawyer.com/feed/ 3
   # --- X（旧 Twitter）の話題の投稿：Google News の site:x.com 検索、直近 2 日 ---
   - https://news.google.com/rss/search?q=site%3Ax.com%20%28AI%20OR%20%E7%94%9F%E6%88%90AI%20OR%20Claude%20OR%20ChatGPT%20OR%20Codex%29%20%28%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%20OR%20%E9%96%8B%E7%99%BA%20OR%20%E6%A5%AD%E5%8B%99%20OR%20%E4%BB%95%E4%BA%8B%29%20when%3A2d&hl=ja&gl=JP&ceid=JP:ja 10
   # --- Google News のキーワード検索（1 キーワード = 1 フィード。どのキーワードが効いたかを区別するため分けている）---
-  # 週次レビューが自動で足し引きする（1 週に追加 1・削除 1 まで、合計 6 本まで）。試用中の行には「# 試用 YYYY-Www」を付ける。
+  # 週次レビューが自動で足し引きする（1 週に追加 1・削除 1 まで、英語のキーワード検索は合計 8 本まで）。試用中の行には「# 試用 YYYY-Www」を付ける。
   # キーワードを足す・外すときは行ごと増減する。形式：q=%22<語>%22%20when%3A3d（直近 3 日、フレーズ検索）
   - https://news.google.com/rss/search?q=%22Forward%20Deployed%20Engineer%22%20when%3A3d&hl=en-US&gl=US&ceid=US:en 4
   - https://news.google.com/rss/search?q=%22enterprise%20AI%22%20when%3A3d&hl=en-US&gl=US&ceid=US:en 4
   - https://news.google.com/rss/search?q=%22AI%20in%20banking%22%20when%3A3d&hl=en-US&gl=US&ceid=US:en 4
   - https://news.google.com/rss/search?q=%22AI%20coding%22%20when%3A3d&hl=en-US&gl=US&ceid=US:en 4
   - https://news.google.com/rss/search?q=%22autonomous%20driving%22%20when%3A3d&hl=en-US&gl=US&ceid=US:en 4   # 試用 2026-W40
+  - https://news.google.com/rss/search?q=%22regtech%22%20when%3A3d&hl=en-US&gl=US&ceid=US:en 3
+  # 日本語の検索（hl=ja）。週次レビューの自動入れ替えの対象外（手で管理する）
+  - https://news.google.com/rss/search?q=%E9%8A%80%E8%A1%8C%20%28%E7%B5%8C%E5%96%B6%E6%88%A6%E7%95%A5%20OR%20%E7%B5%8C%E5%96%B6%E7%B5%B1%E5%90%88%20OR%20%E5%86%8D%E7%B7%A8%20OR%20%E4%B8%AD%E6%9C%9F%E7%B5%8C%E5%96%B6%E8%A8%88%E7%94%BB%29%20when%3A3d&hl=ja&gl=JP&ceid=JP:ja 4
+  - https://news.google.com/rss/search?q=%28%E6%B3%95%E5%8B%99%20OR%20%E3%83%AA%E3%83%BC%E3%82%AC%E3%83%AB%20OR%20%E3%82%B3%E3%83%B3%E3%83%97%E3%83%A9%E3%82%A4%E3%82%A2%E3%83%B3%E3%82%B9%29%20%28%E7%94%9F%E6%88%90AI%20OR%20AI%29%20%28%E9%8A%80%E8%A1%8C%20OR%20%E9%87%91%E8%9E%8D%20OR%20%E4%BC%81%E6%A5%AD%E6%B3%95%E5%8B%99%29%20when%3A3d&hl=ja&gl=JP&ceid=JP:ja 3
   # --- Google Alerts の RSS（4-1 で取得したら下のコメントを外して置き換える） ---
   - https://www.google.com/alerts/feeds/05042959136347932292/6290204638768659933 5   # AI × 金融
   

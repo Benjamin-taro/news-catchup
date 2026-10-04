@@ -14,6 +14,7 @@ import datetime as dt
 import json
 import math
 import re
+import urllib.parse
 from collections import Counter, defaultdict
 from pathlib import Path
 
@@ -27,7 +28,8 @@ CONFIG = ROOT / "_system/matcha/config.yaml"
 TOPIC_NAME = {
     "ai-work": "AI と開発者の働き方", "ai-enterprise": "AI の企業導入", "career": "FDE とエンジニアのキャリア",
     "bigtech": "大手テック企業の動き", "incident": "セキュリティ事故", "agent-infra": "AI エージェントの基盤と安全性",
-    "llm": "LLM とモデル競争", "autonomous": "自動運転", "stack": "開発スタック", "other": "その他の話題",
+    "llm": "LLM とモデル競争", "banking": "銀行業界と金融の構造", "legal-tech": "法務・コンプライアンスのテクノロジー",
+    "autonomous": "自動運転", "stack": "開発スタック", "other": "その他の話題",
 }
 TYPE_NAME = {"opinion": "議論・意見", "release": "製品・発表", "incident": "事故・障害", "data": "調査・データ",
              "howto": "解説", "news": "報道", "social": "SNS", "promo": "宣伝"}
@@ -181,10 +183,17 @@ def regression(rows):
 
 
 def search_keywords():
-    """config.yaml の Google News 検索キーワードを取り出す。"""
+    """config.yaml の Google News 検索キーワードを取り出す（引用符と when: を除いた検索語）。"""
     if not CONFIG.exists():
         return []
-    return re.findall(r"news\.google\.com/rss/search\?q=%22([^%]+(?:%20[^%]+)*)%22", CONFIG.read_text().replace("%20", " "))
+    out = []
+    for line in CONFIG.read_text().split("\n"):
+        m = re.match(r"^  - https://news\.google\.com/rss/search\?q=([^&\s]+)&", line)
+        if not m or "site%3Ax.com" in m.group(1):
+            continue
+        q = urllib.parse.unquote(m.group(1))
+        out.append(re.sub(r"\s*when:\d+d\s*", "", q).strip().strip('"'))
+    return out
 
 
 def main():

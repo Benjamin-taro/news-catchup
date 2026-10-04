@@ -31,6 +31,8 @@ TOPICS = {
     "incident": "セキュリティ事故",
     "agent-infra": "AI エージェントの基盤と安全性",
     "llm": "LLM とモデル競争",
+    "banking": "銀行業界と金融の構造",
+    "legal-tech": "法務・コンプライアンスのテクノロジー",
     "autonomous": "自動運転",
     "stack": "開発スタック",
     "other": "その他の話題",

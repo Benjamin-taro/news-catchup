@@ -122,11 +122,11 @@ selected: <本編＋Explore 枠の件数>
 - `title`：記事タイトル（原題）
 - `url`：元記事の URL（入力ファイルにあるもの）
 - `feed`：入力ファイルのセクション名を短くしたもの。
-  `HN` / `はてブ` / `Lobsters` / `Spring` / `Zenn K8s` / `Publickey` / `Inside Java` / `OpenShift` / `Pragmatic Engineer` / `ByteByteGo` / `X` / `Google News` / `Google Alerts`。新しいフィードは見出しから短い名前を付ける
-- `keyword`：`Google News` のときはその検索キーワード（例：`AI coding`）、`Google Alerts` のときはアラートの検索語、それ以外は `""`
+  `HN` / `はてブ` / `Lobsters` / `Finextra` / `Banking Dive` / `Artificial Lawyer` / `Spring` / `Zenn K8s` / `Publickey` / `Inside Java` / `OpenShift` / `Pragmatic Engineer` / `ByteByteGo` / `X` / `Google News` / `Google Alerts`。新しいフィードは見出しから短い名前を付ける
+- `keyword`：`Google News` のときはその検索語。見出しから引用符と `when:3d` を除いたもの（例：`AI coding`、`銀行 (経営戦略 OR 経営統合 OR 再編 OR 中期経営計画)`）、`Google Alerts` のときはアラートの検索語、それ以外は `""`
 - `publisher`：Google News / Google Alerts / X のときの実際の媒体名や投稿元。それ以外は `""`
 - `lang`：`ja` / `en`
-- `topic`：`ai-work`（AI と働き方・開発のしかた）/ `ai-enterprise`（企業導入・銀行金融）/ `career`（FDE・キャリア・組織）/ `bigtech`（企業の戦略・人事・再編）/ `incident`（事故・セキュリティ）/ `agent-infra`（エージェント基盤・プロトコル）/ `llm`（モデル・業界の力関係）/ `autonomous`（自動運転）/ `stack`（Spring・Java・K8s など）/ `other`
+- `topic`：`ai-work`（AI と働き方・開発のしかた）/ `ai-enterprise`（企業導入・銀行金融）/ `career`（FDE・キャリア・組織）/ `bigtech`（企業の戦略・人事・再編）/ `incident`（事故・セキュリティ）/ `agent-infra`（エージェント基盤・プロトコル）/ `llm`（モデル・業界の力関係）/ `banking`（銀行業界の経営・再編・規制、金融テックの全体像。AI の導入事例そのものは `ai-enterprise`）/ `legal-tech`（法務・コンプライアンス・規制対応のテクノロジー）/ `autonomous`（自動運転）/ `stack`（Spring・Java・K8s など）/ `other`
 - `topic2`：2 つ目の話題（同じ語彙）。なければ `""`
 - `entities`：Digest に載せた記事（`status` が `main` / `explore`）だけに付ける。記事の中心になっている企業・人物・製品を 0〜3 個、
   `[{"name":"OpenAI","kind":"company"}]` の形で書く（`kind` は `company` / `person` / `product`）。それ以外の記事は `[]`。
