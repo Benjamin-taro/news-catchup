@@ -1,334 +1,46 @@
 {
- "nodes": [
-  {
-   "id": "root",
-   "type": "text",
-   "text": "# 銀行はこの先どうなるか",
-   "x": -460,
-   "y": 700.0,
-   "width": 340,
-   "height": 120,
-   "color": "6"
-  },
-  {
-   "id": "i1l0",
-   "type": "text",
-   "text": "金利と手数料のバランスはどう変わるか",
-   "x": 480,
-   "y": 0,
-   "width": 460,
-   "height": 90
-  },
-  {
-   "id": "i1l1",
-   "type": "text",
-   "text": "決済や融資は、他業種のサービスに組み込まれていくか",
-   "x": 480,
-   "y": 110,
-   "width": 460,
-   "height": 90
-  },
-  {
-   "id": "i1l2",
-   "type": "text",
-   "text": "エージェントが顧客になる取引は収益源になるか",
-   "x": 480,
-   "y": 220,
-   "width": 460,
-   "height": 90
-  },
-  {
-   "id": "i1",
-   "type": "text",
-   "text": "**① どこで稼ぐか**",
-   "x": 40,
-   "y": 110.0,
-   "width": 340,
-   "height": 90
-  },
-  {
-   "id": "i2l0",
-   "type": "text",
-   "text": "事務の自動化はどこまで進むか。人は減るのか、配置が変わるのか",
-   "x": 480,
-   "y": 370,
-   "width": 460,
-   "height": 90
-  },
-  {
-   "id": "i2l1",
-   "type": "text",
-   "text": "基幹系の刷新とクラウド移行は費用を下げるか",
-   "x": 480,
-   "y": 480,
-   "width": 460,
-   "height": 90
-  },
-  {
-   "id": "i2l2",
-   "type": "text",
-   "text": "AI への投資は回収できるか",
-   "x": 480,
-   "y": 590,
-   "width": 460,
-   "height": 90
-  },
-  {
-   "id": "i2",
-   "type": "text",
-   "text": "**② コストをどう下げるか**",
-   "x": 40,
-   "y": 480.0,
-   "width": 340,
-   "height": 90
-  },
-  {
-   "id": "i3l0",
-   "type": "text",
-   "text": "ネット銀行・フィンテック・大手テック企業との関係",
-   "x": 480,
-   "y": 740,
-   "width": 460,
-   "height": 90
-  },
-  {
-   "id": "i3l1",
-   "type": "text",
-   "text": "経営統合・再編はどこまで進むか",
-   "x": 480,
-   "y": 850,
-   "width": 460,
-   "height": 90
-  },
-  {
-   "id": "i3",
-   "type": "text",
-   "text": "**③ 誰と競争し、誰と組むか**",
-   "x": 40,
-   "y": 795.0,
-   "width": 340,
-   "height": 90
-  },
-  {
-   "id": "i4l0",
-   "type": "text",
-   "text": "AI を業務に入れるときの責任と統制をどう作るか",
-   "x": 480,
-   "y": 1000,
-   "width": 460,
-   "height": 90,
-   "color": "1"
-  },
-  {
-   "id": "i4l1",
-   "type": "text",
-   "text": "事故や漏えいにどう備え、どう対応するか",
-   "x": 480,
-   "y": 1110,
-   "width": 460,
-   "height": 90,
-   "color": "1"
-  },
-  {
-   "id": "i4l2",
-   "type": "text",
-   "text": "規制はどちらに動くか",
-   "x": 480,
-   "y": 1220,
-   "width": 460,
-   "height": 90,
-   "color": "1"
-  },
-  {
-   "id": "i4l3",
-   "type": "text",
-   "text": "法務・コンプライアンスの仕事を、テクノロジーでどう変えるか\n（今週は記事なし）",
-   "x": 480,
-   "y": 1330,
-   "width": 460,
-   "height": 90,
-   "color": "1"
-  },
-  {
-   "id": "i4",
-   "type": "text",
-   "text": "**④ リスクと規制にどう対応するか**\n⬅ Legal 領域はここ",
-   "x": 40,
-   "y": 1165.0,
-   "width": 340,
-   "height": 90,
-   "color": "1"
-  },
-  {
-   "id": "i5l0",
-   "type": "text",
-   "text": "どんな人材が必要になるか（FDE など）",
-   "x": 480,
-   "y": 1480,
-   "width": 460,
-   "height": 90
-  },
-  {
-   "id": "i5l1",
-   "type": "text",
-   "text": "AI に任せることで落ちる力をどう保つか",
-   "x": 480,
-   "y": 1590,
-   "width": 460,
-   "height": 90
-  },
-  {
-   "id": "i5",
-   "type": "text",
-   "text": "**⑤ 人と組織をどう変えるか**",
-   "x": 40,
-   "y": 1535.0,
-   "width": 340,
-   "height": 90
-  },
-  {
-   "id": "map",
-   "type": "file",
-   "file": "wiki/map/金融とテクノロジーの地図.md",
-   "x": -460,
-   "y": 890.0,
-   "width": 340,
-   "height": 120
-  }
- ],
- "edges": [
-  {
-   "id": "i1-i1l0",
-   "fromNode": "i1",
-   "fromSide": "right",
-   "toNode": "i1l0",
-   "toSide": "left"
-  },
-  {
-   "id": "i1-i1l1",
-   "fromNode": "i1",
-   "fromSide": "right",
-   "toNode": "i1l1",
-   "toSide": "left"
-  },
-  {
-   "id": "i1-i1l2",
-   "fromNode": "i1",
-   "fromSide": "right",
-   "toNode": "i1l2",
-   "toSide": "left"
-  },
-  {
-   "id": "root-i1",
-   "fromNode": "root",
-   "fromSide": "right",
-   "toNode": "i1",
-   "toSide": "left"
-  },
-  {
-   "id": "i2-i2l0",
-   "fromNode": "i2",
-   "fromSide": "right",
-   "toNode": "i2l0",
-   "toSide": "left"
-  },
-  {
-   "id": "i2-i2l1",
-   "fromNode": "i2",
-   "fromSide": "right",
-   "toNode": "i2l1",
-   "toSide": "left"
-  },
-  {
-   "id": "i2-i2l2",
-   "fromNode": "i2",
-   "fromSide": "right",
-   "toNode": "i2l2",
-   "toSide": "left"
-  },
-  {
-   "id": "root-i2",
-   "fromNode": "root",
-   "fromSide": "right",
-   "toNode": "i2",
-   "toSide": "left"
-  },
-  {
-   "id": "i3-i3l0",
-   "fromNode": "i3",
-   "fromSide": "right",
-   "toNode": "i3l0",
-   "toSide": "left"
-  },
-  {
-   "id": "i3-i3l1",
-   "fromNode": "i3",
-   "fromSide": "right",
-   "toNode": "i3l1",
-   "toSide": "left"
-  },
-  {
-   "id": "root-i3",
-   "fromNode": "root",
-   "fromSide": "right",
-   "toNode": "i3",
-   "toSide": "left"
-  },
-  {
-   "id": "i4-i4l0",
-   "fromNode": "i4",
-   "fromSide": "right",
-   "toNode": "i4l0",
-   "toSide": "left"
-  },
-  {
-   "id": "i4-i4l1",
-   "fromNode": "i4",
-   "fromSide": "right",
-   "toNode": "i4l1",
-   "toSide": "left"
-  },
-  {
-   "id": "i4-i4l2",
-   "fromNode": "i4",
-   "fromSide": "right",
-   "toNode": "i4l2",
-   "toSide": "left"
-  },
-  {
-   "id": "i4-i4l3",
-   "fromNode": "i4",
-   "fromSide": "right",
-   "toNode": "i4l3",
-   "toSide": "left"
-  },
-  {
-   "id": "root-i4",
-   "fromNode": "root",
-   "fromSide": "right",
-   "toNode": "i4",
-   "toSide": "left"
-  },
-  {
-   "id": "i5-i5l0",
-   "fromNode": "i5",
-   "fromSide": "right",
-   "toNode": "i5l0",
-   "toSide": "left"
-  },
-  {
-   "id": "i5-i5l1",
-   "fromNode": "i5",
-   "fromSide": "right",
-   "toNode": "i5l1",
-   "toSide": "left"
-  },
-  {
-   "id": "root-i5",
-   "fromNode": "root",
-   "fromSide": "right",
-   "toNode": "i5",
-   "toSide": "left"
-  }
- ]
+	"nodes":[
+		{"id":"root","type":"text","text":"# 銀行はこの先どうなるか","x":-460,"y":700,"width":340,"height":120,"color":"6"},
+		{"id":"i1l0","type":"text","text":"金利と手数料のバランスはどう変わるか","x":480,"y":0,"width":460,"height":90},
+		{"id":"i1l1","type":"text","text":"決済や融資は、他業種のサービスに組み込まれていくか","x":480,"y":110,"width":460,"height":90},
+		{"id":"i1l2","type":"text","text":"エージェントが顧客になる取引は収益源になるか","x":480,"y":220,"width":460,"height":90},
+		{"id":"i1","type":"text","text":"**① どこで稼ぐか**","x":40,"y":110,"width":340,"height":90},
+		{"id":"i2l0","type":"text","text":"事務の自動化はどこまで進むか。人は減るのか、配置が変わるのか","x":480,"y":370,"width":460,"height":90},
+		{"id":"i2l1","type":"text","text":"基幹系の刷新とクラウド移行は費用を下げるか","x":480,"y":480,"width":460,"height":90},
+		{"id":"i2l2","type":"text","text":"AI への投資は回収できるか","x":480,"y":590,"width":460,"height":90},
+		{"id":"i2","type":"text","text":"**② コストをどう下げるか**","x":40,"y":480,"width":340,"height":90},
+		{"id":"i3l0","type":"text","text":"ネット銀行・フィンテック・大手テック企業との関係","x":480,"y":740,"width":460,"height":90},
+		{"id":"i3l1","type":"text","text":"経営統合・再編はどこまで進むか","x":480,"y":850,"width":460,"height":90},
+		{"id":"i3","type":"text","text":"**③ 誰と競争し、誰と組むか**","x":40,"y":795,"width":340,"height":90},
+		{"id":"i4l0","type":"text","text":"AI を業務に入れるときの責任と統制をどう作るか","x":480,"y":1000,"width":460,"height":90,"color":"1"},
+		{"id":"i4l1","type":"text","text":"事故や漏えいにどう備え、どう対応するか","x":480,"y":1110,"width":460,"height":90,"color":"1"},
+		{"id":"i4l2","type":"text","text":"規制はどちらに動くか","x":480,"y":1220,"width":460,"height":90,"color":"1"},
+		{"id":"i4l3","type":"text","text":"法務・コンプライアンスの仕事を、テクノロジーでどう変えるか\n（今週は記事なし）","x":480,"y":1330,"width":460,"height":90,"color":"1"},
+		{"id":"i4","type":"text","text":"**④ リスクと規制にどう対応するか**\n⬅ Legal 領域はここ","x":40,"y":1165,"width":340,"height":90,"color":"1"},
+		{"id":"i5l0","type":"text","text":"どんな人材が必要になるか（FDE など）","x":480,"y":1480,"width":460,"height":90},
+		{"id":"i5l1","type":"text","text":"AI に任せることで落ちる力をどう保つか","x":480,"y":1590,"width":460,"height":90},
+		{"id":"i5","type":"text","text":"**⑤ 人と組織をどう変えるか**","x":40,"y":1535,"width":340,"height":90},
+		{"id":"map","type":"file","file":"wiki/map/金融とテクノロジーの地図.md","x":-460,"y":890,"width":340,"height":120}
+	],
+	"edges":[
+		{"id":"i1-i1l0","fromNode":"i1","fromSide":"right","toNode":"i1l0","toSide":"left"},
+		{"id":"i1-i1l1","fromNode":"i1","fromSide":"right","toNode":"i1l1","toSide":"left"},
+		{"id":"i1-i1l2","fromNode":"i1","fromSide":"right","toNode":"i1l2","toSide":"left"},
+		{"id":"root-i1","fromNode":"root","fromSide":"right","toNode":"i1","toSide":"left"},
+		{"id":"i2-i2l0","fromNode":"i2","fromSide":"right","toNode":"i2l0","toSide":"left"},
+		{"id":"i2-i2l1","fromNode":"i2","fromSide":"right","toNode":"i2l1","toSide":"left"},
+		{"id":"i2-i2l2","fromNode":"i2","fromSide":"right","toNode":"i2l2","toSide":"left"},
+		{"id":"root-i2","fromNode":"root","fromSide":"right","toNode":"i2","toSide":"left"},
+		{"id":"i3-i3l0","fromNode":"i3","fromSide":"right","toNode":"i3l0","toSide":"left"},
+		{"id":"i3-i3l1","fromNode":"i3","fromSide":"right","toNode":"i3l1","toSide":"left"},
+		{"id":"root-i3","fromNode":"root","fromSide":"right","toNode":"i3","toSide":"left"},
+		{"id":"i4-i4l0","fromNode":"i4","fromSide":"right","toNode":"i4l0","toSide":"left"},
+		{"id":"i4-i4l1","fromNode":"i4","fromSide":"right","toNode":"i4l1","toSide":"left"},
+		{"id":"i4-i4l2","fromNode":"i4","fromSide":"right","toNode":"i4l2","toSide":"left"},
+		{"id":"i4-i4l3","fromNode":"i4","fromSide":"right","toNode":"i4l3","toSide":"left"},
+		{"id":"root-i4","fromNode":"root","fromSide":"right","toNode":"i4","toSide":"left"},
+		{"id":"i5-i5l0","fromNode":"i5","fromSide":"right","toNode":"i5l0","toSide":"left"},
+		{"id":"i5-i5l1","fromNode":"i5","fromSide":"right","toNode":"i5l1","toSide":"left"},
+		{"id":"root-i5","fromNode":"root","fromSide":"right","toNode":"i5","toSide":"left"}
+	]
 }
