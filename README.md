@@ -56,3 +56,12 @@ wiki/tech/            👍 記事のトピック別蓄積
 - launchd：`com.yuki.news-daily`（平日 8:00）、`com.yuki.news-weekly`（日曜 20:00）。ログは `/tmp/news-daily.log`、`/tmp/news-weekly.log`。
 - 取りこぼした日や作り直したいとき：`launchctl kickstart gui/$(id -u)/com.yuki.news-daily`
   （その日の Digest がすでにあれば skip する。作り直すときは先に `Digest/YYYY-MM-DD.md` を消す）
+
+## 分析用の記録（候補ログ）
+
+- 日次の処理は、落とした記事も含めた全候補を `_system/news/candidates/YYYY-MM-DD.jsonl` に記録する
+  （フィード・検索キーワード・話題・種類・点数・採否・Digest での番号）。
+- Google News はキーワードごとに 1 フィードに分けてある（`_system/matcha/config.yaml`）。どのキーワードが効いたかを区別するため。
+- 集計：`python3 scripts/source_stats.py --by feed|keyword|topic|type|publisher [--days 28]`
+  （集めた件数 → Digest に載った件数 → 👍/👎）。フィードやキーワードを入れ替える根拠にする。
+- データが 4 週間ほどたまったら、👍/👎 を目的変数にした回帰で、採点の重みとキーワード候補を見直す。

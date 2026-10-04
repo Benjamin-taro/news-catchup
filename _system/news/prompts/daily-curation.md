@@ -20,8 +20,9 @@
 - 記事は 1 行 1 件で `[タイトル](URL)` の形。
 - Hacker News の行は先頭にコメントページへのリンクが付く：`[🔥 ](HNのURL)[タイトル](記事URL)`。
   記事 URL は 2 つ目のリンク。🔥（コメント 100 件以上）は人気の目安として採点に少し加点してよい。
-- Google News の見出しは `🍵 "Spring Boot | Kubernetes | …" - Google News`。
+- Google News のキーワード検索は、キーワードごとに別の見出しになる：`🍵 ""<キーワード>" when:3d" - Google News`。
   URL は `news.google.com` のリダイレクトで、タイトル末尾の「 - 媒体名」が実際のソース。1 ソース 3 件の制限はこの媒体名単位で数える。
+  どのキーワードの検索から来たかを、候補ログ（§5.5）の `keyword` に記録する。
 - X の投稿は、見出しが `site:x.com … - Google ニュース` のセクションに入る。タイトルが投稿の本文そのもの（末尾に ` - x.com`）。
   x.com は本文を取得できないことが多いので、タイトルの投稿文から要約してよい（「（見出しより）」は不要、代わりにソース名を「X」とする）。
   個人の感想・宣伝・告知・技術と関係ない投稿は除外し、エンジニアの働き方や業界の空気がわかる投稿を優先する。
@@ -105,6 +106,32 @@ selected: <本編＋Explore 枠の件数>
 ---
 ## 🔧 Stack メモ
 - [<タイトル>](<URL>) — <何が変わったか 1 行>
+```
+
+## 5.5 候補ログ（分析用の記録）
+入力ファイルにあった記事を**落としたものも含めて全部**、`_system/news/candidates/YYYY-MM-DD.jsonl` に 1 行 1 件の JSON で書き出す。
+あとで 👍/👎 と突き合わせて、採点の重みやキーワード・フィードの効き具合を分析するための記録なので、漏れなく書く。
+
+各行のフィールド（この順で、値は下の語彙から選ぶ）：
+- `title`：記事タイトル（原題）
+- `url`：元記事の URL（入力ファイルにあるもの）
+- `feed`：入力ファイルのセクション名を短くしたもの。
+  `HN` / `はてブ` / `Lobsters` / `Spring` / `Zenn K8s` / `Publickey` / `Inside Java` / `OpenShift` / `Pragmatic Engineer` / `ByteByteGo` / `X` / `Google News` / `Google Alerts`。新しいフィードは見出しから短い名前を付ける
+- `keyword`：`Google News` のときはその検索キーワード（例：`AI coding`）、`Google Alerts` のときはアラートの検索語、それ以外は `""`
+- `publisher`：Google News / Google Alerts / X のときの実際の媒体名や投稿元。それ以外は `""`
+- `lang`：`ja` / `en`
+- `topic`：`ai-work`（AI と働き方・開発のしかた）/ `ai-enterprise`（企業導入・銀行金融）/ `career`（FDE・キャリア・組織）/ `bigtech`（企業の戦略・人事・再編）/ `incident`（事故・セキュリティ）/ `agent-infra`（エージェント基盤・プロトコル）/ `llm`（モデル・業界の力関係）/ `autonomous`（自動運転）/ `stack`（Spring・Java・K8s など）/ `other`
+- `type`：`opinion`（議論・意見）/ `release`（製品・発表）/ `incident`（事故・障害の報告）/ `data`（調査・データ）/ `howto`（解説・ハウツー）/ `news`（そのほかの報道）/ `social`（SNS の投稿）/ `promo`（宣伝・告知・求人）
+- `primary`：一次情報なら `true`、二次情報なら `false`
+- `score`：0–100 の採点。除外や重複で採点していない記事は `null`
+- `status`：`main`（本編）/ `explore`（Explore 枠）/ `stack`（Stack メモ）/ `dropped`（不採用）
+- `rank`：Digest での番号（`## N.` の N）。Digest に載っていなければ `null`。複数の記事を 1 項目にまとめた場合は、まとめた記事すべてに同じ番号を入れる
+- `drop`：不採用の理由。`dup`（重複）/ `exclude`（Exclude 該当）/ `cap`（1 ソース 3 件の上限）/ `old`（古い）/ `low`（点数が届かない）。採用した記事は `""`
+
+例：
+```
+{"title":"Coding Is Not Solved","url":"https://…","feed":"HN","keyword":"","publisher":"","lang":"en","topic":"ai-work","type":"opinion","primary":true,"score":78,"status":"main","rank":1,"drop":""}
+{"title":"Top 10 AI coding tools - Example","url":"https://news.google.com/…","feed":"Google News","keyword":"AI coding","publisher":"Example","lang":"en","topic":"ai-work","type":"promo","primary":false,"score":null,"status":"dropped","rank":null,"drop":"exclude"}
 ```
 
 ## 6. ログ
