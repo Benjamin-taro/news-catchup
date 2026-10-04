@@ -1,0 +1,33 @@
+filters:
+  or:
+    - file.inFolder("wiki/topics")
+    - file.inFolder("wiki/entities")
+properties:
+  file.name:
+    displayName: ノート
+  note.kind:
+    displayName: 種類
+  note.updated:
+    displayName: 更新日
+  file.backlinks:
+    displayName: 関連記事
+views:
+  - type: table
+    name: "トピック"
+    filters:
+      and:
+        - file.inFolder("wiki/topics")
+    order:
+      - file.name
+      - note.updated
+  - type: table
+    name: "企業・人物・製品"
+    filters:
+      and:
+        - file.inFolder("wiki/entities")
+    groupBy:
+      property: note.kind
+      direction: ASC
+    order:
+      - file.name
+      - note.kind

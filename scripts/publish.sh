@@ -6,6 +6,7 @@ cd "$(dirname "$0")/.."
 
 git pull --rebase --autostash -q
 /usr/bin/python3 scripts/add_images.py >/dev/null
+/usr/bin/python3 scripts/build_wiki.py >/dev/null
 git add Digest Weekly wiki _system/news
 if git diff --cached --quiet; then
   echo "$(date '+%F %T') nothing to publish"

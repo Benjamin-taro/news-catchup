@@ -1,0 +1,452 @@
+{
+ "2026-09-28#1": {
+  "topic": "ai-work",
+  "topic2": "",
+  "kind": "opinion",
+  "entities": [
+   {
+    "name": "DHH",
+    "kind": "person"
+   },
+   {
+    "name": "37signals",
+    "kind": "company"
+   }
+  ]
+ },
+ "2026-09-28#2": {
+  "topic": "bigtech",
+  "topic2": "agent-infra",
+  "kind": "news",
+  "entities": [
+   {
+    "name": "OpenAI",
+    "kind": "company"
+   },
+   {
+    "name": "Sam Altman",
+    "kind": "person"
+   }
+  ]
+ },
+ "2026-09-28#3": {
+  "topic": "agent-infra",
+  "topic2": "ai-enterprise",
+  "kind": "release",
+  "entities": [
+   {
+    "name": "AWS",
+    "kind": "company"
+   },
+   {
+    "name": "Docker",
+    "kind": "company"
+   },
+   {
+    "name": "Microsoft",
+    "kind": "company"
+   }
+  ]
+ },
+ "2026-09-28#5": {
+  "topic": "ai-enterprise",
+  "topic2": "",
+  "kind": "news",
+  "entities": [
+   {
+    "name": "三井住友銀行",
+    "kind": "company"
+   }
+  ]
+ },
+ "2026-09-28#6": {
+  "topic": "incident",
+  "topic2": "",
+  "kind": "incident",
+  "entities": [
+   {
+    "name": "タイムズカー",
+    "kind": "company"
+   }
+  ]
+ },
+ "2026-09-28#7": {
+  "topic": "llm",
+  "topic2": "",
+  "kind": "release",
+  "entities": [
+   {
+    "name": "Anthropic",
+    "kind": "company"
+   },
+   {
+    "name": "Claude",
+    "kind": "product"
+   }
+  ]
+ },
+ "2026-09-28#8": {
+  "topic": "agent-infra",
+  "topic2": "ai-enterprise",
+  "kind": "howto",
+  "entities": [
+   {
+    "name": "Stripe",
+    "kind": "company"
+   },
+   {
+    "name": "Machine Payments Protocol",
+    "kind": "product"
+   }
+  ]
+ },
+ "2026-09-28#9": {
+  "topic": "other",
+  "topic2": "",
+  "kind": "opinion",
+  "entities": [
+   {
+    "name": "LibreOffice",
+    "kind": "product"
+   }
+  ]
+ },
+ "2026-09-29#1": {
+  "topic": "ai-work",
+  "topic2": "",
+  "kind": "opinion",
+  "entities": []
+ },
+ "2026-09-29#2": {
+  "topic": "agent-infra",
+  "topic2": "ai-work",
+  "kind": "incident",
+  "entities": [
+   {
+    "name": "Claude Code",
+    "kind": "product"
+   },
+   {
+    "name": "Anthropic",
+    "kind": "company"
+   }
+  ]
+ },
+ "2026-09-29#3": {
+  "topic": "bigtech",
+  "topic2": "",
+  "kind": "opinion",
+  "entities": [
+   {
+    "name": "Cal Newport",
+    "kind": "person"
+   },
+   {
+    "name": "OpenAI",
+    "kind": "company"
+   },
+   {
+    "name": "Anthropic",
+    "kind": "company"
+   }
+  ]
+ },
+ "2026-09-29#4": {
+  "topic": "bigtech",
+  "topic2": "",
+  "kind": "release",
+  "entities": [
+   {
+    "name": "AMD",
+    "kind": "company"
+   },
+   {
+    "name": "World Labs",
+    "kind": "company"
+   }
+  ]
+ },
+ "2026-09-29#5": {
+  "topic": "career",
+  "topic2": "",
+  "kind": "opinion",
+  "entities": [
+   {
+    "name": "MonotaRO",
+    "kind": "company"
+   }
+  ]
+ },
+ "2026-09-29#6": {
+  "topic": "incident",
+  "topic2": "",
+  "kind": "incident",
+  "entities": [
+   {
+    "name": "タイムズカー",
+    "kind": "company"
+   }
+  ]
+ },
+ "2026-09-29#8": {
+  "topic": "stack",
+  "topic2": "",
+  "kind": "opinion",
+  "entities": [
+   {
+    "name": "Jujutsu",
+    "kind": "product"
+   },
+   {
+    "name": "Git",
+    "kind": "product"
+   }
+  ]
+ },
+ "2026-09-30#1": {
+  "topic": "agent-infra",
+  "topic2": "bigtech",
+  "kind": "release",
+  "entities": [
+   {
+    "name": "OpenAI",
+    "kind": "company"
+   }
+  ]
+ },
+ "2026-09-30#2": {
+  "topic": "incident",
+  "topic2": "",
+  "kind": "incident",
+  "entities": [
+   {
+    "name": "タイムズカー",
+    "kind": "company"
+   }
+  ]
+ },
+ "2026-09-30#3": {
+  "topic": "agent-infra",
+  "topic2": "",
+  "kind": "release",
+  "entities": [
+   {
+    "name": "NVIDIA",
+    "kind": "company"
+   }
+  ]
+ },
+ "2026-09-30#5": {
+  "topic": "ai-enterprise",
+  "topic2": "llm",
+  "kind": "data",
+  "entities": []
+ },
+ "2026-09-30#7": {
+  "topic": "llm",
+  "topic2": "",
+  "kind": "data",
+  "entities": [
+   {
+    "name": "Anthropic",
+    "kind": "company"
+   },
+   {
+    "name": "Claude",
+    "kind": "product"
+   }
+  ]
+ },
+ "2026-09-30#10": {
+  "topic": "agent-infra",
+  "topic2": "",
+  "kind": "howto",
+  "entities": [
+   {
+    "name": "Hermes Agent",
+    "kind": "product"
+   }
+  ]
+ },
+ "2026-10-01#1": {
+  "topic": "incident",
+  "topic2": "agent-infra",
+  "kind": "incident",
+  "entities": [
+   {
+    "name": "GitHub",
+    "kind": "company"
+   }
+  ]
+ },
+ "2026-10-01#2": {
+  "topic": "ai-work",
+  "topic2": "",
+  "kind": "opinion",
+  "entities": [
+   {
+    "name": "CockroachDB",
+    "kind": "company"
+   }
+  ]
+ },
+ "2026-10-01#4": {
+  "topic": "ai-enterprise",
+  "topic2": "agent-infra",
+  "kind": "howto",
+  "entities": [
+   {
+    "name": "DoorDash",
+    "kind": "company"
+   }
+  ]
+ },
+ "2026-10-01#6": {
+  "topic": "ai-work",
+  "topic2": "",
+  "kind": "opinion",
+  "entities": [
+   {
+    "name": "Peter Norvig",
+    "kind": "person"
+   }
+  ]
+ },
+ "2026-10-01#9": {
+  "topic": "llm",
+  "topic2": "",
+  "kind": "release",
+  "entities": [
+   {
+    "name": "Google",
+    "kind": "company"
+   },
+   {
+    "name": "Gemini",
+    "kind": "product"
+   }
+  ]
+ },
+ "2026-10-02#1": {
+  "topic": "incident",
+  "topic2": "",
+  "kind": "incident",
+  "entities": [
+   {
+    "name": "第一生命",
+    "kind": "company"
+   },
+   {
+    "name": "ヤマト運輸",
+    "kind": "company"
+   }
+  ]
+ },
+ "2026-10-02#2": {
+  "topic": "ai-enterprise",
+  "topic2": "",
+  "kind": "data",
+  "entities": [
+   {
+    "name": "Accenture",
+    "kind": "company"
+   }
+  ]
+ },
+ "2026-10-02#3": {
+  "topic": "career",
+  "topic2": "ai-work",
+  "kind": "opinion",
+  "entities": []
+ },
+ "2026-10-02#4": {
+  "topic": "ai-work",
+  "topic2": "",
+  "kind": "opinion",
+  "entities": []
+ },
+ "2026-10-02#9": {
+  "topic": "agent-infra",
+  "topic2": "llm",
+  "kind": "release",
+  "entities": [
+   {
+    "name": "DeepSeek",
+    "kind": "company"
+   }
+  ]
+ },
+ "2026-10-03#1": {
+  "topic": "career",
+  "topic2": "",
+  "kind": "release",
+  "entities": [
+   {
+    "name": "Anthropic",
+    "kind": "company"
+   }
+  ]
+ },
+ "2026-10-03#2": {
+  "topic": "career",
+  "topic2": "",
+  "kind": "opinion",
+  "entities": []
+ },
+ "2026-10-03#3": {
+  "topic": "incident",
+  "topic2": "agent-infra",
+  "kind": "incident",
+  "entities": []
+ },
+ "2026-10-03#5": {
+  "topic": "ai-work",
+  "topic2": "",
+  "kind": "opinion",
+  "entities": []
+ },
+ "2026-10-03#7": {
+  "topic": "incident",
+  "topic2": "",
+  "kind": "incident",
+  "entities": [
+   {
+    "name": "Git",
+    "kind": "product"
+   }
+  ]
+ },
+ "2026-10-03#8": {
+  "topic": "ai-work",
+  "topic2": "incident",
+  "kind": "incident",
+  "entities": [
+   {
+    "name": "American Express",
+    "kind": "company"
+   }
+  ]
+ },
+ "2026-10-03#9": {
+  "topic": "llm",
+  "topic2": "",
+  "kind": "release",
+  "entities": [
+   {
+    "name": "ELYZA",
+    "kind": "company"
+   }
+  ]
+ },
+ "2026-10-03#10": {
+  "topic": "agent-infra",
+  "topic2": "",
+  "kind": "release",
+  "entities": [
+   {
+    "name": "Apple",
+    "kind": "company"
+   }
+  ]
+ }
+}

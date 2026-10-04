@@ -26,7 +26,7 @@ _system/matcha/
 inbox/matcha/         Matcha の生データ（Git 管理外）
 Digest/               日次ダイジェスト（読むのはここだけ）
 Weekly/               週次まとめ
-wiki/tech/            👍 記事のトピック別蓄積
+wiki/                 Obsidian 用の知識ノート（下記）
 ```
 
 ## 日々の使い方
@@ -65,3 +65,20 @@ wiki/tech/            👍 記事のトピック別蓄積
 - 集計：`python3 scripts/source_stats.py --by feed|keyword|topic|type|publisher [--days 28]`
   （集めた件数 → Digest に載った件数 → 👍/👎）。フィードやキーワードを入れ替える根拠にする。
 - データが 4 週間ほどたまったら、👍/👎 を目的変数にした回帰で、採点の重みとキーワード候補を見直す。
+
+## 知識ノート（wiki/）
+
+👍 を付けた記事を、Obsidian のリンク・プロパティ・Bases でつないで積み上げる。入口は `wiki/Home.md`。
+
+| フォルダ | 中身 | 誰が書くか |
+|---|---|---|
+| `wiki/articles/` | 記事ノート（1 記事 = 1 ノート）。プロパティに日付・種類・トピック・登場する企業や人物 | `scripts/build_wiki.py` が 👍 の記事から自動で作る（既存のノートは書き換えない） |
+| `wiki/topics/` | トピックノート。「現状のまとめ」「論点と立場」「問い」 | 週次レビューが書き直す。「自分の考え」は自分で書く |
+| `wiki/entities/` | 企業・人物・製品のノート | 雛形はスクリプト、「概要」は週次レビュー |
+| `wiki/views/` | Bases の一覧（関連記事・直近 7 日・トピック別 など） | 固定 |
+
+- 記事ノートは、Digest が更新されるたび（サイトのボタン・Obsidian での 👍）に `wiki.yml` と `publish.sh` が作る。
+- トピックと登場する企業・人物は、候補ログ（`_system/news/candidates/`）の `topic`・`topic2`・`entities` から取る。
+  候補ログがない 10/4 以前の分は `_system/news/wiki-backfill.json`。
+- グラフビューは種類ごとに色分けしてある（`.obsidian/graph.json`）。
+- 注意：このリポジトリは Public なので、`wiki/` に書いた「自分の考え」も公開される。

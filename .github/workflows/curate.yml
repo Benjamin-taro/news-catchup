@@ -71,6 +71,10 @@ jobs:
           curl -sSL -o /usr/local/bin/matcha "https://github.com/piqoni/matcha/releases/download/v0.9.0/matcha-linux-amd64"
           chmod +x /usr/local/bin/matcha
           scripts/collect.sh
+      # 👍 の記事から Obsidian 用の知識ノートを作る（週次レビューはこのノートを読んで育てる）
+      - name: Build wiki notes
+        if: steps.kind.outputs.kind == 'daily' || steps.kind.outputs.kind == 'weekly'
+        run: python3 scripts/build_wiki.py
       - name: Install Claude Code
         if: steps.kind.outputs.kind != 'skip'
         run: npm install -g @anthropic-ai/claude-code

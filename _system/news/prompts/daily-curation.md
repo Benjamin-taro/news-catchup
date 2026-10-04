@@ -121,6 +121,10 @@ selected: <本編＋Explore 枠の件数>
 - `publisher`：Google News / Google Alerts / X のときの実際の媒体名や投稿元。それ以外は `""`
 - `lang`：`ja` / `en`
 - `topic`：`ai-work`（AI と働き方・開発のしかた）/ `ai-enterprise`（企業導入・銀行金融）/ `career`（FDE・キャリア・組織）/ `bigtech`（企業の戦略・人事・再編）/ `incident`（事故・セキュリティ）/ `agent-infra`（エージェント基盤・プロトコル）/ `llm`（モデル・業界の力関係）/ `autonomous`（自動運転）/ `stack`（Spring・Java・K8s など）/ `other`
+- `topic2`：2 つ目の話題（同じ語彙）。なければ `""`
+- `entities`：Digest に載せた記事（`status` が `main` / `explore`）だけに付ける。記事の中心になっている企業・人物・製品を 0〜3 個、
+  `[{"name":"OpenAI","kind":"company"}]` の形で書く（`kind` は `company` / `person` / `product`）。それ以外の記事は `[]`。
+  名前は `wiki/entities/` に既にあるノート名と表記をそろえる（例：`OpenAI`、`Anthropic`、`Claude Code`）。新しい名前は正式な表記で書く
 - `type`：`opinion`（議論・意見）/ `release`（製品・発表）/ `incident`（事故・障害の報告）/ `data`（調査・データ）/ `howto`（解説・ハウツー）/ `news`（そのほかの報道）/ `social`（SNS の投稿）/ `promo`（宣伝・告知・求人）
 - `primary`：一次情報なら `true`、二次情報なら `false`
 - `score`：0–100 の採点。除外や重複で採点していない記事は `null`
@@ -130,8 +134,8 @@ selected: <本編＋Explore 枠の件数>
 
 例：
 ```
-{"title":"Coding Is Not Solved","url":"https://…","feed":"HN","keyword":"","publisher":"","lang":"en","topic":"ai-work","type":"opinion","primary":true,"score":78,"status":"main","rank":1,"drop":""}
-{"title":"Top 10 AI coding tools - Example","url":"https://news.google.com/…","feed":"Google News","keyword":"AI coding","publisher":"Example","lang":"en","topic":"ai-work","type":"promo","primary":false,"score":null,"status":"dropped","rank":null,"drop":"exclude"}
+{"title":"Coding Is Not Solved","url":"https://…","feed":"HN","keyword":"","publisher":"","lang":"en","topic":"ai-work","topic2":"","entities":[{"name":"DHH","kind":"person"}],"type":"opinion","primary":true,"score":78,"status":"main","rank":1,"drop":""}
+{"title":"Top 10 AI coding tools - Example","url":"https://news.google.com/…","feed":"Google News","keyword":"AI coding","publisher":"Example","lang":"en","topic":"ai-work","topic2":"","entities":[],"type":"promo","primary":false,"score":null,"status":"dropped","rank":null,"drop":"exclude"}
 ```
 
 ## 6. ログ
@@ -142,5 +146,5 @@ selected: <本編＋Explore 枠の件数>
 - 警告がなければ「警告: なし」と書く。
 
 ## 禁止事項
-- `interests.md`、`feedback-log.md`、`inbox/` 以下のファイルは書き換えない（読むだけ）。
+- `interests.md`、`feedback-log.md`、`inbox/`、`wiki/` 以下のファイルは書き換えない（読むだけ）。
 - Web 検索で新しい記事を追加しない。採用するのは入力ファイルにある記事だけ（Web 検索は §4.5 の事実確認にだけ使う）。

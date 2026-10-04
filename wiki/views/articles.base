@@ -1,0 +1,83 @@
+filters:
+  and:
+    - file.inFolder("wiki/articles")
+properties:
+  file.name:
+    displayName: 記事
+  note.day:
+    displayName: 日付
+  note.main_topic:
+    displayName: トピック
+  note.kind:
+    displayName: 種類
+  note.source:
+    displayName: 出典
+  note.score:
+    displayName: 点数
+  note.entities:
+    displayName: 登場
+views:
+  - type: table
+    name: "このノートに関連する記事"
+    filters:
+      and:
+        - file.hasLink(this.file)
+    order:
+      - file.name
+      - note.day
+      - note.kind
+      - note.source
+    sort:
+      - property: note.day
+        direction: DESC
+  - type: table
+    name: "直近 7 日"
+    filters:
+      and:
+        - 'day > today() - "7d"'
+    order:
+      - file.name
+      - note.day
+      - note.main_topic
+      - note.kind
+      - note.entities
+    sort:
+      - property: note.day
+        direction: DESC
+  - type: table
+    name: "トピック別"
+    groupBy:
+      property: note.main_topic
+      direction: ASC
+    order:
+      - file.name
+      - note.day
+      - note.kind
+      - note.source
+    sort:
+      - property: note.day
+        direction: DESC
+  - type: table
+    name: "種類別"
+    groupBy:
+      property: note.kind
+      direction: ASC
+    order:
+      - file.name
+      - note.day
+      - note.main_topic
+    sort:
+      - property: note.day
+        direction: DESC
+  - type: table
+    name: "すべて"
+    order:
+      - file.name
+      - note.day
+      - note.main_topic
+      - note.kind
+      - note.source
+      - note.score
+    sort:
+      - property: note.day
+        direction: DESC
