@@ -75,6 +75,10 @@ jobs:
       - name: Build wiki notes
         if: steps.kind.outputs.kind == 'daily' || steps.kind.outputs.kind == 'weekly'
         run: python3 scripts/build_wiki.py
+      # 週次：話題・キーワード・フィード別の集計と回帰分析を先に作る（週次レビューが Weekly に載せる。係数は日次の採点に使う）
+      - name: Weekly stats
+        if: steps.kind.outputs.kind == 'weekly'
+        run: python3 scripts/weekly_stats.py
       - name: Install Claude Code
         if: steps.kind.outputs.kind != 'skip'
         run: npm install -g @anthropic-ai/claude-code

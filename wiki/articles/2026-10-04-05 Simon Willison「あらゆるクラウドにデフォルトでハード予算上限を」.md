@@ -3,13 +3,14 @@ type: article
 day: 2026-10-04
 vote: up
 score: 80
-kind: 
+kind: 議論・意見
 source: "Simon Willison's Weblog"
 url: "https://simonwillison.net/2026/Oct/3/default-hard-budget-caps/"
 main_topic: "[[その他の話題]]"
 topics:
   - "[[その他の話題]]"
-entities: []
+entities:
+  - "[[Simon Willison]]"
 digest: "[[Digest/2026-10-04]]"
 digest_rank: 5
 ---
@@ -27,6 +28,7 @@ digest_rank: 5
 > エージェントに長時間作業を任せる運用が広がるほど、コストの暴走を防ぐ設計（上限・停止）は開発チームの必須要件になる。
 
 **トピック**：[[その他の話題]]
+**登場**：[[Simon Willison]]
 **出典**：[Simon Willison's Weblog](https://simonwillison.net/2026/Oct/3/default-hard-budget-caps/)（[[Digest/2026-10-04|2026-10-04 の Digest]] 5 番）
 
 ## 自分のメモ

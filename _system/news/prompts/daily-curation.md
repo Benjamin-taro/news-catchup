@@ -12,6 +12,8 @@
 - `inbox/matcha/YYYY-MM-DD.md`（なければ、対応する Digest がまだない直近の日のファイル）
 - `_system/news/interests.md`
 - `_system/news/feedback-log.md` の直近 4 週分
+- `_system/news/model.json`（あれば）：👍/👎 の回帰分析の係数。採点の補正に使う（§3）
+- `_system/news/watchlist.md`（あれば）：今週のキュレーション方針。週次レビューが決めた「今週追う話題」（§3）
 - 入力ファイルが見つからない場合は、`Digest/YYYY-MM-DD.md` に「⚠️ 本日の収集データがありません。
   launchd / Matcha を確認してください」とだけ書き、runlog にも警告を追記して終了する。
 
@@ -47,6 +49,10 @@
     マイルストーン版リリース、変更点の解説、入門記事は本編の対象にしない（Stack メモ行き）。
   - feedback-log で 👍 が多い傾向に近いものは加点、👎 が多い傾向は減点
   - 一次情報（公式発表、著者本人の記事）を二次まとめより優先する
+  - **回帰の係数による補正**：`model.json` の `weights` から、その記事の話題・種類・フィード・言語にあたる係数を足し合わせる。
+    合計がプラスなら加点、マイナスなら減点する（目安：合計 ±1.0 で ±10 点、最大 ±15 点）。
+    👍 と 👎 の合計が 5 件未満の特徴は、係数を半分の重みで扱う。`model.json` がなければ補正しない。
+  - **今週の方針による加点**：`watchlist.md` の「追う話題」に当たる記事は +10 点。続報にあたる場合は、So what で前回からの進展に触れる。
 - 各記事に「採点理由」を 1 行で付ける。形式は「<セクション名>: <キーワード or 理由>」
   （例：「Trend: AI と開発者の働き方」）。週次レビューがこのセクション名で集計する。
 
@@ -125,6 +131,9 @@ selected: <本編＋Explore 枠の件数>
 - `entities`：Digest に載せた記事（`status` が `main` / `explore`）だけに付ける。記事の中心になっている企業・人物・製品を 0〜3 個、
   `[{"name":"OpenAI","kind":"company"}]` の形で書く（`kind` は `company` / `person` / `product`）。それ以外の記事は `[]`。
   名前は `wiki/entities/` に既にあるノート名と表記をそろえる（例：`OpenAI`、`Anthropic`、`Claude Code`）。新しい名前は正式な表記で書く
+- `terms`：その記事のキーワードを 1〜3 個。**表記をそろえた短い語**にする（例：`コーディングエージェント`、`情報漏えい`、`FDE`、`買収・人事`）。
+  過去の候補ログ（直近の `_system/news/candidates/*.jsonl`）で使われている語があれば、同じ表記を使う。新しい話題のときだけ新しい語を作る。
+  不採用の記事にも付ける（どのキーワードが多く集まり、どれが載らなかったかを数えるため）
 - `type`：`opinion`（議論・意見）/ `release`（製品・発表）/ `incident`（事故・障害の報告）/ `data`（調査・データ）/ `howto`（解説・ハウツー）/ `news`（そのほかの報道）/ `social`（SNS の投稿）/ `promo`（宣伝・告知・求人）
 - `primary`：一次情報なら `true`、二次情報なら `false`
 - `score`：0–100 の採点。除外や重複で採点していない記事は `null`
@@ -134,8 +143,8 @@ selected: <本編＋Explore 枠の件数>
 
 例：
 ```
-{"title":"Coding Is Not Solved","url":"https://…","feed":"HN","keyword":"","publisher":"","lang":"en","topic":"ai-work","topic2":"","entities":[{"name":"DHH","kind":"person"}],"type":"opinion","primary":true,"score":78,"status":"main","rank":1,"drop":""}
-{"title":"Top 10 AI coding tools - Example","url":"https://news.google.com/…","feed":"Google News","keyword":"AI coding","publisher":"Example","lang":"en","topic":"ai-work","topic2":"","entities":[],"type":"promo","primary":false,"score":null,"status":"dropped","rank":null,"drop":"exclude"}
+{"title":"Coding Is Not Solved","url":"https://…","feed":"HN","keyword":"","publisher":"","lang":"en","topic":"ai-work","topic2":"","entities":[{"name":"DHH","kind":"person"}],"terms":["手書きコーディング終了論"],"type":"opinion","primary":true,"score":78,"status":"main","rank":1,"drop":""}
+{"title":"Top 10 AI coding tools - Example","url":"https://news.google.com/…","feed":"Google News","keyword":"AI coding","publisher":"Example","lang":"en","topic":"ai-work","topic2":"","entities":[],"terms":["コーディングエージェント"],"type":"promo","primary":false,"score":null,"status":"dropped","rank":null,"drop":"exclude"}
 ```
 
 ## 6. ログ
@@ -146,5 +155,5 @@ selected: <本編＋Explore 枠の件数>
 - 警告がなければ「警告: なし」と書く。
 
 ## 禁止事項
-- `interests.md`、`feedback-log.md`、`inbox/`、`wiki/` 以下のファイルは書き換えない（読むだけ）。
+- `interests.md`、`feedback-log.md`、`inbox/`、`wiki/` 以下のファイル、`model.json`、`watchlist.md` は書き換えない（読むだけ）。
 - Web 検索で新しい記事を追加しない。採用するのは入力ファイルにある記事だけ（Web 検索は §4.5 の事実確認にだけ使う）。
