@@ -92,6 +92,13 @@ jobs:
         env:
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
         run: scripts/curate.sh "${{ steps.kind.outputs.kind }}"
+      # 週次レビューが検索キーワードを書き換えるので、設定が壊れていないか確かめる。壊れていたら元に戻す
+      - name: Validate Matcha config
+        if: steps.kind.outputs.kind == 'weekly'
+        run: |
+          if python3 scripts/check_config.py; then echo "config ok"; else
+            echo "config が不正なので、週次レビュー前の内容に戻す"; git checkout -- _system/matcha/config.yaml
+          fi
       - name: Add images
         if: steps.kind.outputs.kind != 'check' && steps.kind.outputs.kind != 'skip'
         run: python3 scripts/add_images.py
@@ -101,7 +108,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898+github-actions[bot]@users.noreply.github.com"
-          git add Digest Weekly wiki _system/news inbox _system/matcha/matcha.db
+          git add Digest Weekly wiki _system/news inbox _system/matcha
           git diff --cached --quiet && exit 0
           git commit -m "Curate ${{ steps.kind.outputs.kind }} $(date +%F)"
           for i in 1 2 3; do git pull --rebase -q && git push -q && echo "pushed=1" >> "$GITHUB_OUTPUT" && exit 0; sleep 5; done
