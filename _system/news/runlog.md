@@ -19,3 +19,4 @@
 2026-10-03 | 入力 40 件 | 前処理後 28 件 | 採用 10 件（本編 8 + Explore 2）+ Stack メモ 1 件 | 警告: なし（Google News のリダイレクトは開けず Web 検索で確認。Four Horsemen は 403 で検索要約のみ、Eric Schwartz／Amex は未確認で「見出しより」扱い。Stack の該当記事が少ない）
 2026-10-04 | 入力 51 件 | 前処理後 30 件 | 採用 10 件（本編 8 + Explore 2）+ Stack メモ 1 件 | 警告: なし（Guardian は取得不可で Web 検索により確認、New Stack も検索要約のみ。RHCOS 10 は未確認。Stack の該当記事が少ない。Publickey の記事内公開日表記が 10/5 でずれていたため日付は不記載）
 2026-W40 weekly | 👍 46 / 👎 23 | 提案 2 件 | 警告: なし
+2026-10-05 | 入力 63 件 | 前処理後 51 件 | 採用 10 件（本編 8 + Explore 2）+ Stack メモ 0 件 | 警告: なし（Google News・Finextra・47NEWS・NYT・X は取得不可で Web 検索により確認。Dan Adler の発言時期と Noah Smith 記事の本文は未確認。Stack の該当記事なし。X の Frontier Academy 投稿は「10/4」だが報道は 10/2 発表）
