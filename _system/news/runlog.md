@@ -21,3 +21,4 @@
 2026-W40 weekly | 👍 46 / 👎 23 | 提案 2 件 | 警告: なし
 2026-10-05 | 入力 63 件 | 前処理後 51 件 | 採用 10 件（本編 8 + Explore 2）+ Stack メモ 0 件 | 警告: なし（Google News・Finextra・47NEWS・NYT・X は取得不可で Web 検索により確認。Dan Adler の発言時期と Noah Smith 記事の本文は未確認。Stack の該当記事なし。X の Frontier Academy 投稿は「10/4」だが報道は 10/2 発表）
 2026-10-06 | 入力 77 件 | 前処理後 62 件 | 採用 10 件（本編 8 + Explore 2）+ Stack メモ 3 件 | 警告: なし（Finextra は 403、Google News のリダイレクトは開けず Web 検索で確認。Wikimedia・Codex Cloud・Beam は本文取得。Stack メモ 3 件は本文未確認。本編 3 は複数記事を 1 項目に統合。楽天の 1.01 億件は真偽未確認）
+2026-10-07 | 入力 79 件 | 前処理後 71 件 | 採用 10 件（本編 8 + Explore 2）+ Stack メモ 1 件 | 警告: なし（OpenAI 数学の記事は 403 で本文未確認、「見出しより」扱い。東北 3 行・JPMorgan・BI 調査は Google News のリダイレクトが開けず Web 検索で確認。Spring は要約のみ。本編 5・6 は複数記事を 1 項目に統合。BI の開発者調査は本文未確認のため不採用）
