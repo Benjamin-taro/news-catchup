@@ -47,24 +47,29 @@
   - interests.md のキーワードとの関連度 × 重み（Trend 3 / Explore 2 / Stack 1）
   - **マクロ度**：業界全体の流れ・働き方・キャリアに効く話を、個別製品の細かい更新より高くする。
     マイルストーン版リリース、変更点の解説、入門記事は本編の対象にしない（Stack メモ行き）。
+    例外：interests.md に明示されている Claude / Claude Code の新機能・活用方法は、何が変わったか・実務でどう使うかが具体的に分かるものなら本編に上げてよい（入門記事・宣伝は除く）。
   - feedback-log で 👍 が多い傾向に近いものは加点、👎 が多い傾向は減点
   - 一次情報（公式発表、著者本人の記事）を二次まとめより優先する
   - **回帰の係数による補正**：`model.json` の `weights` から、その記事の話題・種類・フィード・言語にあたる係数を足し合わせる。
     合計がプラスなら加点、マイナスなら減点する（目安：合計 ±1.0 で ±10 点、最大 ±15 点）。
     👍 と 👎 の合計が 5 件未満の特徴は、係数を半分の重みで扱う。`model.json` がなければ補正しない。
   - **今週の方針による加点**：`watchlist.md` の「追う話題」に当たる記事は +10 点。続報にあたる場合は、So what で前回からの進展に触れる。
+  - **注目の書き手による加点**：`interests.md` の「注目の書き手」に載っている書き手（X のアカウント、note・Zenn などのクリエイター）の記事は +8 点。
+    書き手は URL のユーザー名、タイトルの「｜名前 - note」、X の投稿なら §4.5 の確認で分かった投稿者で判断する。
 - 各記事に「採点理由」を 1 行で付ける。形式は「<セクション名>: <キーワード or 理由>」
   （例：「Trend: AI と開発者の働き方」）。週次レビューがこのセクション名で集計する。
 
 ## 4. 選定
-- 本編：スコア上位 8 件を選ぶ。
-- Explore 枠：スコアに関係なく「普段の関心の外だが知っておく価値がある」記事を 2 件選ぶ（フィルターバブル対策）。
+- 本編：スコア上位 12 件を選ぶ。
+- **事故・セキュリティの上限**：候補ログの `topic` が `incident` になる記事は、本編に **最大 2 件**。同じ事故の続報や、国内の不正アクセス・漏えいの寄せ集めは 1 項目にまとめて数える。
+  上限を超えた分は次点の記事を繰り上げる（上限で落とした記事の `drop` は `cap`）。
+- Explore 枠：スコアに関係なく「普段の関心の外だが知っておく価値がある」記事を 3 件選ぶ（フィルターバブル対策）。
   採点理由は「Explore枠: <理由>」とする。
 - Stack メモ：本編に入らなかった Stack の記事から、知っておくべきものを最大 3 件選ぶ。
 - 前処理後の件数が足りなければ、あるだけ採用する。
 
 ## 4.5 本文を確認する
-- 本編と Explore 枠の 10 件は、要約を書く前に元記事を開いて本文を確認する。タイトルだけで要約を作らない。
+- 本編と Explore 枠の 15 件は、要約を書く前に元記事を開いて本文を確認する。タイトルだけで要約を作らない。
 - 本文を取得できない場合（有料記事・SNS など）は、同じニュースを報じる別の記事を Web 検索で探して事実を確認してよい。
   それでも確認できなければ、見出しから言える範囲だけを書き、「一言で」の末尾に「（見出しより）」と付ける。
 - 本文を読んで発表日が古いと分かったら、その記事を外して次点の記事を繰り上げる。
@@ -106,8 +111,9 @@ selected: <本編＋Explore 枠の件数>
 
 ---
 ## 🧭 Explore
-## 9. …
-## 10. …
+## 13. …
+## 14. …
+## 15. …
 
 ---
 ## 🔧 Stack メモ
@@ -126,6 +132,11 @@ selected: <本編＋Explore 枠の件数>
 - `keyword`：`Google News` のときはその検索語。見出しから引用符と `when:3d` を除いたもの（例：`AI coding`、`銀行 (経営戦略 OR 経営統合 OR 再編 OR 中期経営計画)`）、`Google Alerts` のときはアラートの検索語、それ以外は `""`
 - `publisher`：Google News / Google Alerts / X のときの実際の媒体名や投稿元。それ以外は `""`
 - `lang`：`ja` / `en`
+- `author`：書き手。分かるときだけ書き、分からなければ `""`。
+  note は URL `note.com/<ユーザー名>/n/…` のユーザー名（タイトルの「｜名前 - note」しか分からなければその名前）、
+  Zenn・Qiita・はてなブログ・Substack・Medium は URL のユーザー名、X の投稿は §4.5 の確認で分かった投稿者の `@ハンドル`（表示名しか分からなければ表示名）、
+  個人ブログは著者名。報道機関や企業ブログの記事は `""`（媒体は `publisher` に入る）。
+  週次レビューがこの欄を集計し、よく選ばれる書き手の専用フィードを足す
 - `topic`：`ai-work`（AI と働き方・開発のしかた）/ `ai-enterprise`（企業導入・銀行金融）/ `career`（FDE・キャリア・組織）/ `bigtech`（企業の戦略・人事・再編）/ `incident`（事故・セキュリティ）/ `agent-infra`（エージェント基盤・プロトコル）/ `llm`（モデル・業界の力関係）/ `banking`（銀行業界の経営・再編・規制、金融テックの全体像。AI の導入事例そのものは `ai-enterprise`）/ `legal-tech`（法務・コンプライアンス・規制対応のテクノロジー）/ `autonomous`（自動運転）/ `stack`（Spring・Java・K8s など）/ `other`
 - `topic2`：2 つ目の話題（同じ語彙）。なければ `""`
 - `entities`：Digest に載せた記事（`status` が `main` / `explore`）だけに付ける。記事の中心になっている企業・人物・製品を 0〜3 個、
@@ -143,8 +154,8 @@ selected: <本編＋Explore 枠の件数>
 
 例：
 ```
-{"title":"Coding Is Not Solved","url":"https://…","feed":"HN","keyword":"","publisher":"","lang":"en","topic":"ai-work","topic2":"","entities":[{"name":"DHH","kind":"person"}],"terms":["手書きコーディング終了論"],"type":"opinion","primary":true,"score":78,"status":"main","rank":1,"drop":""}
-{"title":"Top 10 AI coding tools - Example","url":"https://news.google.com/…","feed":"Google News","keyword":"AI coding","publisher":"Example","lang":"en","topic":"ai-work","topic2":"","entities":[],"terms":["コーディングエージェント"],"type":"promo","primary":false,"score":null,"status":"dropped","rank":null,"drop":"exclude"}
+{"title":"Coding Is Not Solved","url":"https://…","feed":"HN","keyword":"","publisher":"","lang":"en","author":"dhh","topic":"ai-work","topic2":"","entities":[{"name":"DHH","kind":"person"}],"terms":["手書きコーディング終了論"],"type":"opinion","primary":true,"score":78,"status":"main","rank":1,"drop":""}
+{"title":"Top 10 AI coding tools - Example","url":"https://news.google.com/…","feed":"Google News","keyword":"AI coding","publisher":"Example","lang":"en","author":"","topic":"ai-work","topic2":"","entities":[],"terms":["コーディングエージェント"],"type":"promo","primary":false,"score":null,"status":"dropped","rank":null,"drop":"exclude"}
 ```
 
 ## 6. ログ

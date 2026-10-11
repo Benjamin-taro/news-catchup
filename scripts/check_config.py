@@ -9,7 +9,7 @@ PATH = Path(__file__).resolve().parent.parent / "_system/matcha/config.yaml"
 FEED = re.compile(r"^  - (https://\S+)( \d+)?(\s+#.*)?$")
 KEYWORD = re.compile(r"^https://news\.google\.com/rss/search\?q=[A-Za-z0-9%.\-_]+&(hl=en-US&gl=US&ceid=US:en|hl=ja&gl=JP&ceid=JP:ja)$")
 
-errors, feeds, keywords, in_feeds = [], 0, 0, False
+errors, feeds, keywords, authors, in_feeds = [], 0, 0, 0, False
 text = PATH.read_text()
 for no, line in enumerate(text.split("\n"), 1):
     if line.startswith("feeds:"):
@@ -25,6 +25,9 @@ for no, line in enumerate(text.split("\n"), 1):
         continue
     feeds += 1
     url = m.group(1)
+    if m.group(3) and "書き手" in m.group(3):
+        authors += 1
+        continue  # 書き手の専用フィード（note の RSS、site:x.com/<ハンドル> 検索など）はキーワード検索の上限に数えない
     if "news.google.com/rss/search?q=" in url and "site%3Ax.com" not in url:
         keywords += 1
         if not KEYWORD.match(url):
@@ -36,7 +39,9 @@ if feeds < 8:
     errors.append(f"フィードが {feeds} 本しかない（消しすぎ）")
 if keywords > 12:
     errors.append(f"キーワード検索が {keywords} 本ある（上限 12 本）")
+if authors > 8:
+    errors.append(f"書き手の専用フィードが {authors} 本ある（上限 8 本）")
 if errors:
     print("\n".join(errors))
     sys.exit(1)
-print(f"ok: feeds={feeds}, keyword searches={keywords}")
+print(f"ok: feeds={feeds}, keyword searches={keywords}, author feeds={authors}")

@@ -123,6 +123,104 @@ def verdict(s):
     return "割れている"
 
 
+# ---- 書き手（X のアカウント、note・Zenn・Qiita などのクリエイター）----
+# 候補ログの author が空でも、URL やタイトルから分かる範囲で書き手を割り出す。
+AUTHOR_URL = [
+    (re.compile(r"https?://note\.com/([A-Za-z0-9_]+)/n/"), "note"),
+    (re.compile(r"https?://zenn\.dev/([A-Za-z0-9_]+)/(?:articles|books|scraps)/"), "Zenn"),
+    (re.compile(r"https?://qiita\.com/([A-Za-z0-9_\-@.]+)/items/"), "Qiita"),
+    (re.compile(r"https?://([a-z0-9\-]+\.hatenablog\.(?:com|jp))/"), "はてなブログ"),
+    (re.compile(r"https?://([a-z0-9\-]+)\.substack\.com/"), "Substack"),
+    (re.compile(r"https?://medium\.com/@([A-Za-z0-9_.\-]+)"), "Medium"),
+    (re.compile(r"https?://(?:www\.)?x\.com/([A-Za-z0-9_]+)/status"), "X"),
+]
+NOTE_TITLE = re.compile(r"｜([^｜]+?)\s*-\s*note\s*$")
+
+
+def author_of(r):
+    """(書き手, 媒体) を返す。分からなければ None。"""
+    a = (r.get("author") or "").strip()
+    if a:
+        feed, pub = r.get("feed") or "", r.get("publisher") or ""
+        if feed == "X" or a.startswith("@"):
+            return a.lstrip("@"), "X"
+        if pub.lower().startswith("note") or NOTE_TITLE.search(r.get("title") or ""):
+            return a, "note"
+        for rx, platform in AUTHOR_URL:
+            if rx.search(r.get("url") or ""):
+                return a, platform
+        return a, pub or feed or "不明"
+    for rx, platform in AUTHOR_URL:
+        m = rx.search(r.get("url") or "")
+        if m:
+            return m.group(1), platform
+    m = NOTE_TITLE.search(r.get("title") or "")
+    if m:
+        return m.group(1).strip(), "note"
+    return None
+
+
+def author_feed(name, platform):
+    """その書き手だけを拾う専用フィードの URL。作れなければ ''。"""
+    if platform == "note":
+        return f"https://note.com/{name}/rss" if re.fullmatch(r"[A-Za-z0-9_]+", name) else ""
+    if platform == "Zenn":
+        return f"https://zenn.dev/{name}/feed"
+    if platform == "Qiita":
+        return f"https://qiita.com/{name}/feed"
+    if platform == "はてなブログ":
+        return f"https://{name}/rss"
+    if platform == "Substack":
+        return f"https://{name}.substack.com/feed"
+    if platform == "Medium":
+        return f"https://medium.com/feed/@{name}"
+    if platform == "X" and re.fullmatch(r"[A-Za-z0-9_]+", name):
+        return (f"https://news.google.com/rss/search?q=site%3Ax.com%2F{name}%20when%3A7d"
+                "&hl=ja&gl=JP&ceid=JP:ja")
+    return ""
+
+
+def watched_feeds():
+    """config.yaml で「# 書き手」の印が付いた専用フィードの URL。"""
+    urls = set()
+    if CONFIG.exists():
+        for line in CONFIG.read_text().split("\n"):
+            m = re.match(r"^  - (https://\S+)(?: \d+)?\s+#\s*書き手", line)
+            if m:
+                urls.add(m.group(1))
+    return urls
+
+
+def author_section(rows, days=28):
+    """直近 days 日の書き手別の成績と、専用フィードを足す・外す候補。"""
+    recent = [r for r in rows if r["date"] >= (dt.date.fromisoformat(max(x["date"] for x in rows)) - dt.timedelta(days=days - 1)).isoformat()] if rows else []
+    t = tally(recent, lambda r: [author_of(r)] if author_of(r) else [])
+    watched = watched_feeds()
+    lines, promote = [], []
+    for (name, platform), s in sorted(t.items(), key=lambda kv: (-kv[1]["up"], -kv[1]["shown"], -kv[1]["collected"])):
+        if s["shown"] == 0 and s["collected"] < 3:
+            continue
+        feed = author_feed(name, platform)
+        mark = "あり" if feed and feed in watched else "–"
+        lines.append([f"{name}（{platform}）", s["collected"], s["shown"], s["up"], s["down"], mark])
+        if s["shown"] >= 2 and s["up"] >= 2 and s["up"] > s["down"] and feed and feed not in watched:
+            promote.append((name, platform, s, feed))
+    active = {author_feed(n, p) for (n, p), s in t.items() if s["shown"] > 0}
+    demote = sorted(u for u in watched if u not in active)
+    out = [f"### 書き手ごとの成績（直近 {days} 日）", ""]
+    if lines:
+        out += [table(["書き手（媒体）", "集めた", "Digest に載った", "👍", "👎", "専用フィード"], lines[:20]), ""]
+    else:
+        out += ["書き手を特定できた記事がまだありません。", ""]
+    out += ["- **専用フィードを足す候補**（4 週で 2 件以上載り、👍 2 以上で 👍 > 👎、まだ専用フィードがない）："]
+    out += [f"  - {n}（{p}）：載った {s['shown']}・👍 {s['up']} / 👎 {s['down']} → `{u}`" for n, p, s, u in promote] or ["  - なし"]
+    out += ["- **専用フィードを外す候補**（「# 書き手」の印が付いたフィードで、4 週に 1 件も載らなかった）："]
+    out += [f"  - `{u}`" for u in demote] or ["  - なし"]
+    out += ["", "※ 書き手は候補ログの `author`、なければ URL（note・Zenn・Qiita・はてなブログ・Substack・Medium・x.com）やタイトルから割り出している。"
+            "X の投稿は Google News 経由だと投稿者が分からないことが多く、日次が確認できた分だけ数えている。", ""]
+    return out
+
+
 # ---- 回帰（L2 正則化つきロジスティック回帰。データが少ないので正則化を強めにする） ----
 def features(r):
     f = [f"話題：{TOPIC_NAME.get(r.get('topic'), r.get('topic') or '不明')}",
@@ -252,6 +350,9 @@ def main():
         lines = [[name, s["collected"], s["shown"], s["up"], s["down"]] for name, s in sorted(kw.items(), key=lambda kv: -kv[1]["shown"])]
         if lines:
             out += ["### 検索キーワードごとの成績（Google News）", "", table(["キーワード", "集めた", "Digest に載った", "👍", "👎"], lines), ""]
+
+    # 4.5 書き手別（X のアカウント、note などのクリエイター。週次レビューが専用フィードの足し引きに使う）
+    out += author_section(rows)
 
     # 5. 回帰
     reg = regression(rows)

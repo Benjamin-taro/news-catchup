@@ -1,6 +1,6 @@
 # news-catchup
 
-SWE のホットトピックを毎朝 10 件前後の要約として Obsidian で受け取る仕組み。
+SWE のホットトピックを毎朝 15 件（本編 12 ＋ Explore 3）の要約として Obsidian で受け取る仕組み。
 設計と構築手順は [tech-news-system-blueprint.md](tech-news-system-blueprint.md) を参照。
 
 ## 流れ
@@ -17,7 +17,8 @@ SWE のホットトピックを毎朝 10 件前後の要約として Obsidian �
 
 ```
 _system/news/
-  interests.md        関心キーワードと重み（唯一の設定）
+  interests.md        関心キーワードと重み（選別の設定はここだけ）
+  questions.md        いま答えを持っていない問いと今の見立て（会話で記事を引くときの出発点）
   feedback-log.md     週次集計の履歴
   runlog.md           実行ログ
   prompts/            キュレーションの手順書（curate.sh が読む）
@@ -33,6 +34,16 @@ wiki/                 Obsidian 用の知識ノート（下記）
 
 - `Digest/` の当日ファイルを読み、気になったものだけ 👍 / 👎 にチェックを付ける。
 - 週 1 回、`interests.md` の「提案」欄を見て、採用するものを上のセクションに移す。
+
+## 会話で記事を引く（問いリスト）
+
+このリポジトリで `claude` を起動し、`/question Q1` か「Q1 について最近の記事で見立てはどう動くか」と聞くと、
+Claude が `_system/news/questions.md` の問いと見立てを読み、候補ログ・Digest・wiki から関係する記事を引いて、
+見立てを支持するものと揺らすものに分けて出す。手順と約束は `CLAUDE.md`。
+
+- 問いと見立ては `_system/news/questions.md` に自分で書く。見立てが変わったらその場で直す（履歴は git が持つ）。
+- 検索は `python3 scripts/find_articles.py <語…>`（`--terms` で候補ログのキーワード一覧、`--topic` で話題コード、`--days 0` で全期間）。
+- 設計の経緯は `docs/question-layer-design.md`。
 
 ## Matcha（収集）
 
@@ -96,3 +107,7 @@ wiki/                 Obsidian 用の知識ノート（下記）
   `interests.md` の「変更履歴」と Weekly の「今週変えた基準」に記録する。動かしたくない項目は `interests.md` の「固定」に書く。
   書き換え後の設定は `scripts/check_config.py` が検証し、壊れていれば元に戻す。
 - 候補ログの `terms`（表記をそろえたキーワード）が、キーワード別の集計の元になる。10/4 以前の分は手で付けたもの（`"backfill": true`）。
+- **書き手の学習**：候補ログの `author`（なければ URL やタイトルから割り出す）で、X のアカウントや note・Zenn などのクリエイターごとの成績を `weekly_stats.py` が出す。
+  4 週で 2 件以上載り 👍 2 以上の書き手は、週次レビューが `interests.md` の「注目の書き手」（日次で +8 点）に足し、
+  その人だけを拾う専用フィード（note の RSS、Zenn/Qiita のフィード、X は Google News の `site:x.com/<ハンドル>` 検索）を `config.yaml` に「# 書き手」の印付きで足す（合計 8 本まで）。
+  4 週に 1 件も載らなくなった書き手は外す。手で足したい書き手は「注目の書き手」と「固定」に、見たくない書き手は Exclude に「書き手：<名前>」と書く。
