@@ -1,6 +1,8 @@
 #!/bin/bash
 # Claude Code を非対話モードで起動し、日次キュレーション／週次レビューの手順書を実行する。
 # 使い方：scripts/curate.sh daily | weekly（GitHub Actions の .github/workflows/curate.yml から呼ばれる。Mac で手動実行も可）
+# 試し実行：CURATE_DRY_RUN=1 で git pull と publish を省く。CURATE_DATE=YYYY-MM-DD で「今日」を差し替える。
+#   例：git worktree add /tmp/trial && cd /tmp/trial && rm Digest/$(date +%F).md && CURATE_DRY_RUN=1 scripts/curate.sh daily
 set -uo pipefail
 cd "$(dirname "$0")/.."
 
@@ -11,15 +13,16 @@ case "${1:-}" in
 esac
 
 echo "=== $(date '+%F %T') $1 start"
-git pull --rebase --autostash -q || echo "git pull failed (続行)"
+[ -z "${CURATE_DRY_RUN:-}" ] && { git pull --rebase --autostash -q || echo "git pull failed (続行)"; }
+TODAY="${CURATE_DATE:-$(date '+%Y-%m-%d（%a）')}"
 
 claude -p \
-  "今日は $(date '+%Y-%m-%d（%a）') です。${PROMPT_FILE} を読み、その手順に厳密に従って実行してください。終わったら、作成・更新したファイルと runlog に書いた行を短く報告してください。" \
+  "今日は ${TODAY} です。${PROMPT_FILE} を読み、その手順に厳密に従って実行してください。終わったら、作成・更新したファイルと runlog に書いた行を短く報告してください。" \
   --allowedTools "Read" "Write" "Edit" "Glob" "Grep" "WebFetch" "WebSearch" \
   --disallowedTools "Bash" \
   --permission-mode dontAsk
 status=$?
 echo "=== $(date '+%F %T') $1 claude exit=$status"
 
-[ -z "${GITHUB_ACTIONS:-}" ] && scripts/publish.sh
+[ -z "${GITHUB_ACTIONS:-}" ] && [ -z "${CURATE_DRY_RUN:-}" ] && scripts/publish.sh
 exit $status
