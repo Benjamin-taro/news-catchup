@@ -54,6 +54,9 @@
     合計がプラスなら加点、マイナスなら減点する（目安：合計 ±1.0 で ±10 点、最大 ±15 点）。
     👍 と 👎 の合計が 5 件未満の特徴は、係数を半分の重みで扱う。`model.json` がなければ補正しない。
   - **今週の方針による加点**：`watchlist.md` の「追う話題」に当たる記事は +10 点。続報にあたる場合は、So what で前回からの進展に触れる。
+  - **問いによる加点**：`_system/news/questions.md` の問い（Q1, Q3, …）の「揺らぐとしたら」に書かれた事実に当たる記事、または「見立て」を直接支持する記事は +10 点（複数の問いに当たっても +10 点まで）。
+    採点理由の末尾に「／Q3 を揺らす」「／Q5 を支持」のように問いの ID を書き、候補ログ（§5.5）の `questions` にも入れる。
+    問いに関係するだけの記事（同じ話題だが見立てに当たらない）は加点せず、`questions` にも入れない。
   - **注目の書き手による加点**：`interests.md` の「注目の書き手」に載っている書き手（X のアカウント、note・Zenn などのクリエイター）の記事は +8 点。
     書き手は URL のユーザー名、タイトルの「｜名前 - note」、X の投稿なら §4.5 の確認で分かった投稿者で判断する。
 - 各記事に「採点理由」を 1 行で付ける。形式は「<セクション名>: <キーワード or 理由>」
@@ -172,13 +175,15 @@ selected: <本編＋Explore 枠の件数>
 - `score`：0–100 の採点。除外や重複で採点していない記事は `null`
 - `status`：`main`（本編）/ `explore`（Explore 枠）/ `stack`（Stack メモ）/ `dropped`（不採用）
 - `rank`：Digest での番号（`## N.` の N）。Digest に載っていなければ `null`。複数の記事を 1 項目にまとめた場合は、まとめた記事すべてに同じ番号を入れる
+- `questions`：§3 の「問いによる加点」で当たった問いの ID の配列（例：`["Q3"]`、`["Q1","Q5"]`）。当たらなければ `[]`。
+  不採用の記事にも付ける（問いに関係する記事がどれだけ来て、どれだけ載ったかを週次で数えるため）
 - `drop`：不採用の理由。`dup`（重複）/ `exclude`（Exclude 該当）/ `cap`（1 ソース 3 件の上限）/ `old`（古い）/ `low`（点数が届かない）/ `unfetched`（§4.5 で本文も差し替え記事も読めず外した）。採用した記事は `""`
 - `replaced_by`：§4.5 で同じニュースの別記事に差し替えたときだけ、採用した記事の URL。それ以外は書かない（フィールド自体を省く）
 
 例：
 ```
-{"title":"Coding Is Not Solved","url":"https://…","feed":"HN","keyword":"","publisher":"","lang":"en","author":"dhh","topic":"ai-work","topic2":"","entities":[{"name":"DHH","kind":"person"}],"terms":["手書きコーディング終了論"],"type":"opinion","primary":true,"score":78,"status":"main","rank":1,"drop":""}
-{"title":"Top 10 AI coding tools - Example","url":"https://news.google.com/…","feed":"Google News","keyword":"AI coding","publisher":"Example","lang":"en","author":"","topic":"ai-work","topic2":"","entities":[],"terms":["コーディングエージェント"],"type":"promo","primary":false,"score":null,"status":"dropped","rank":null,"drop":"exclude"}
+{"title":"Coding Is Not Solved","url":"https://…","feed":"HN","keyword":"","publisher":"","lang":"en","author":"dhh","topic":"ai-work","topic2":"","entities":[{"name":"DHH","kind":"person"}],"terms":["手書きコーディング終了論"],"type":"opinion","primary":true,"score":78,"status":"main","rank":1,"questions":["Q3"],"drop":""}
+{"title":"Top 10 AI coding tools - Example","url":"https://news.google.com/…","feed":"Google News","keyword":"AI coding","publisher":"Example","lang":"en","author":"","topic":"ai-work","topic2":"","entities":[],"terms":["コーディングエージェント"],"type":"promo","primary":false,"score":null,"status":"dropped","rank":null,"questions":[],"drop":"exclude"}
 ```
 
 ## 6. ログ

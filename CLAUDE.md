@@ -20,6 +20,7 @@
 python3 scripts/find_articles.py FDE キャリア             # OR 検索、直近 28 日
 python3 scripts/find_articles.py --and AI レビュー --shown  # AND、Digest に載ったものだけ
 python3 scripts/find_articles.py --topic career --days 0  # 話題コードで全期間
+python3 scripts/find_articles.py --question Q3 --days 0   # 問いの ID で（候補ログの questions。2026-10-21 以降）
 python3 scripts/find_articles.py --terms                  # terms の一覧（検索語を決めるときに）
 ```
 

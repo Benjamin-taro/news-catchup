@@ -8,6 +8,7 @@ Claude と会話するときの検索の補助。候補ログは原題（英語�
   python3 scripts/find_articles.py FDE 資格 certification        # どれかに当たれば出す（OR）
   python3 scripts/find_articles.py --and AI レビュー               # 全部に当たるものだけ（AND）
   python3 scripts/find_articles.py --topic career --days 28        # 話題コードで絞る（候補ログの topic / topic2）
+  python3 scripts/find_articles.py --question Q3                   # 問いの ID で絞る（候補ログの questions）
   python3 scripts/find_articles.py 銀行 --shown                    # Digest に載ったものだけ
   python3 scripts/find_articles.py 銀行 --days 0                   # 全期間（既定は直近 28 日）
   python3 scripts/find_articles.py --terms                         # terms の一覧と件数（検索語を決めるときに）
@@ -134,6 +135,8 @@ def fmt(r, notes):
     meta = []
     if r.get("terms"):
         meta.append("terms: " + "、".join(r["terms"]))
+    if r.get("questions"):
+        meta.append("問い: " + "、".join(r["questions"]))
     if r.get("topic"):
         meta.append("topic: " + "/".join(t for t in (r.get("topic"), r.get("topic2")) if t))
     if r.get("feed"):
@@ -155,6 +158,7 @@ def main():
     ap.add_argument("query", nargs="*", help="検索語（大文字小文字は区別しない）")
     ap.add_argument("--and", dest="use_and", action="store_true", help="すべての検索語に当たるものだけ")
     ap.add_argument("--topic", action="append", default=[], help="話題コードで絞る（複数可）")
+    ap.add_argument("--question", action="append", default=[], help="問いの ID で絞る（候補ログの questions。複数可）")
     ap.add_argument("--days", type=int, default=28, help="直近 N 日（0 で全期間。既定 28）")
     ap.add_argument("--shown", action="store_true", help="Digest に載った記事（本編・Explore）だけ")
     ap.add_argument("--limit", type=int, default=40, help="最大件数（既定 40）")
@@ -168,7 +172,7 @@ def main():
         for t, n in c.most_common():
             print(f"- {t}：{n}")
         return
-    if not args.query and not args.topic:
+    if not args.query and not args.topic and not args.question:
         ap.error("検索語か --topic を指定してください")
 
     hit = []
@@ -176,6 +180,8 @@ def main():
         if args.shown and r.get("status") not in ("main", "explore"):
             continue
         if args.topic and not ({r.get("topic"), r.get("topic2")} & set(args.topic)):
+            continue
+        if args.question and not (set(r.get("questions") or []) & set(args.question)):
             continue
         if args.query and not matches(r, args.query, args.use_and):
             continue
@@ -193,6 +199,7 @@ def main():
     shown = sum(r.get("status") in ("main", "explore") for r in uniq)
     votes = Counter(r["digest"].get("vote") for r in uniq if r.get("digest"))
     cond = " ".join(args.query) + (" " + " ".join(f"topic={t}" for t in args.topic) if args.topic else "")
+    cond += (" " + " ".join(f"question={q}" for q in args.question)) if args.question else ""
     print(f"## 検索：{cond.strip()}（直近 {args.days or '全'} 日）")
     print(f"該当 {len(uniq)} 件（Digest に載った {shown} 件、👍 {votes.get('👍', 0)} / 👎 {votes.get('👎', 0)}）")
     if len(uniq) > args.limit:
