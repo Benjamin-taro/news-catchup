@@ -4,6 +4,7 @@ code: llm
 updated: 2026-10-18
 ---
 # LLM とモデル競争
+**関係する問い**：（なし。questions.md のどの問いにも直接は当たらない）
 
 ## 現状のまとめ
 - オープンウェイトが大型化し、複数クラウドで同時に配られ始めた。[[Meta]] は Muse Spark Open（総 816B・アクティブ 42B・100 万トークン）を Hugging Face と主要クラウドで公開した（[[2026-10-16-09 Meta が「Muse Spark Open」のウェイトを公開。816B・アクティブ 42B・100 万トークン、複数クラウドで提供|Muse Spark Open]]、ベンチマークは取得した本文になく、安全性評価は「近日公開」）。[[DeepSeek]] の V4.1 Flash 1017 は MIT ライセンスで、DeepSWE v1.1 が 74.2 → 77.0 になったと自社で示した（[[2026-10-18-06 DeepSeek V4.1 Flash 1017 が MIT ライセンスで公開。約 763B パラメータ、DeepSWE 77.0% と自社|DeepSeek V4.1 Flash]]、価格は記載なし）。

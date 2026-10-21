@@ -3,6 +3,7 @@
 
 - wiki/articles/  記事ノート（1 記事 = 1 ノート）。プロパティとリンクを持つ
 - wiki/topics/    トピックノート（なければ雛形を作る。本文は週次レビューが育てる）
+- wiki/questions/ 問いノート（questions.md の問いごとに 1 つ。手で作る。週次レビューが記事を足す）
 - wiki/entities/  企業・人物・製品のノート（なければ雛形を作る）
 - wiki/views/     Bases の一覧、wiki/Home.md 入口
 
@@ -297,6 +298,7 @@ NOTES_BASE = """filters:
   or:
     - file.inFolder("wiki/topics")
     - file.inFolder("wiki/entities")
+    - file.inFolder("wiki/questions")
 properties:
   file.name:
     displayName: ノート
@@ -312,6 +314,14 @@ views:
     filters:
       and:
         - file.inFolder("wiki/topics")
+    order:
+      - file.name
+      - note.updated
+  - type: table
+    name: "問い"
+    filters:
+      and:
+        - file.inFolder("wiki/questions")
     order:
       - file.name
       - note.updated
@@ -333,7 +343,8 @@ def home_note():
     lines = ["---", "type: home", "---", "# ニュースの知識ノート", "",
              "👍 を付けた記事が、トピック・企業・人物とリンクでつながって積み上がる場所です。",
              "グラフビューを開くと、つながりを図で見られます。", "",
-             "## まだ答えていない問い", "週次レビューが出した問いのうち、チェックが付いていないものです。答えたら、各トピックの「自分の考え」に書いてチェックを付けます。", "",
+             "## 問い", "いま答えを持っていない問い。見立ては `_system/news/questions.md`、記事の積み上げと「自分の考え」は各ノート（`wiki/questions/`）。", "",
+             "## まだ答えていない問い", "週次レビューがトピックごとに出した問い（末尾の（Q 番号）が親の問い）のうち、チェックが付いていないものです。答えたら、各トピックか親の問いの「自分の考え」に書いてチェックを付けます。", "",
              "```query", "path:wiki/topics /^- \\[ \\] /", "```", "",
              "## 直近 7 日の記事", "![[wiki/views/articles.base#直近 7 日]]", "",
              "## トピックごとの現状", ""]

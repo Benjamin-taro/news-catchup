@@ -2,6 +2,7 @@ filters:
   or:
     - file.inFolder("wiki/topics")
     - file.inFolder("wiki/entities")
+    - file.inFolder("wiki/questions")
 properties:
   file.name:
     displayName: ノート
@@ -17,6 +18,14 @@ views:
     filters:
       and:
         - file.inFolder("wiki/topics")
+    order:
+      - file.name
+      - note.updated
+  - type: table
+    name: "問い"
+    filters:
+      and:
+        - file.inFolder("wiki/questions")
     order:
       - file.name
       - note.updated

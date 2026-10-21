@@ -12,6 +12,7 @@
 | `wiki/articles/` | 👍 を付けた記事のノート（1 記事 1 ノート）。`## 自分のメモ` は読み手の欄 | 日本語 |
 | `wiki/topics/` | 話題ごとの「現状のまとめ」「論点と立場」「問い」。`## 自分の考え` は読み手の欄 | 日本語 |
 | `_system/news/questions.md` | 読み手がいま答えを持っていない問いと、今の見立て | 読み手が書く |
+| `wiki/questions/Qn.md` | 問いごとの「揺らす記事」「支持する記事」の積み上げ（週次が足す）と `## 自分の考え`。トピックノート冒頭の「関係する問い」から辿れる | 日本語 |
 | `_system/news/interests.md` | 選別のキーワードと重み | 週次レビューも書き換える |
 
 検索は `python3 scripts/find_articles.py` を使う。候補ログ・Digest・wiki を横断して Markdown で出す。
