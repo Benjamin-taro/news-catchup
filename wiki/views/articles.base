@@ -18,66 +18,66 @@ properties:
     displayName: 登場
 views:
   - type: table
-    name: "このノートに関連する記事"
+    name: このノートに関連する記事
     filters:
       and:
         - file.hasLink(this.file)
     order:
       - file.name
-      - note.day
-      - note.kind
-      - note.source
+      - day
+      - kind
+      - source
     sort:
-      - property: note.day
+      - property: day
         direction: DESC
   - type: table
-    name: "直近 7 日"
+    name: 直近 7 日
     filters:
       and:
-        - 'day > today() - "7d"'
+        - day > today() - "7d"
     order:
       - file.name
-      - note.day
-      - note.main_topic
-      - note.kind
-      - note.entities
+      - day
+      - main_topic
+      - kind
+      - entities
     sort:
-      - property: note.day
+      - property: day
         direction: DESC
   - type: table
-    name: "トピック別"
+    name: トピック別
     groupBy:
-      property: note.main_topic
+      property: main_topic
       direction: ASC
     order:
       - file.name
-      - note.day
-      - note.kind
-      - note.source
+      - day
+      - kind
+      - source
     sort:
-      - property: note.day
+      - property: day
         direction: DESC
   - type: table
-    name: "種類別"
+    name: 種類別
     groupBy:
-      property: note.kind
+      property: kind
       direction: ASC
     order:
       - file.name
-      - note.day
-      - note.main_topic
+      - day
+      - main_topic
     sort:
-      - property: note.day
+      - property: day
         direction: DESC
   - type: table
-    name: "すべて"
+    name: すべて
     order:
       - file.name
-      - note.day
-      - note.main_topic
-      - note.kind
-      - note.source
-      - note.score
+      - day
+      - main_topic
+      - kind
+      - source
+      - score
     sort:
-      - property: note.day
+      - property: day
         direction: DESC
