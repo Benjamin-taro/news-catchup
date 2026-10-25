@@ -40,7 +40,7 @@ feeds:
   - https://news.google.com/rss/search?q=%22AI%20coding%22%20when%3A3d&hl=en-US&gl=US&ceid=US:en 4
   - https://news.google.com/rss/search?q=%22autonomous%20driving%22%20when%3A3d&hl=en-US&gl=US&ceid=US:en 4
   - https://news.google.com/rss/search?q=%22regtech%22%20when%3A3d&hl=en-US&gl=US&ceid=US:en 3
-  - https://news.google.com/rss/search?q=%22AI%20agent%20security%22%20when%3A3d&hl=en-US&gl=US&ceid=US:en 4   # 試用 2026-W41
+  - https://news.google.com/rss/search?q=%22AI%20agent%20security%22%20when%3A3d&hl=en-US&gl=US&ceid=US:en 4
   - https://news.google.com/rss/search?q=%22Claude%20Code%22%20when%3A3d&hl=en-US&gl=US&ceid=US:en 3   # 2026-10-11 読み手が追加（Claude / Claude Code）
   # 日本語の検索（hl=ja）。週次レビューの自動入れ替えの対象外（手で管理する）
   - https://news.google.com/rss/search?q=%E9%8A%80%E8%A1%8C%20%28%E7%B5%8C%E5%96%B6%E6%88%A6%E7%95%A5%20OR%20%E7%B5%8C%E5%96%B6%E7%B5%B1%E5%90%88%20OR%20%E5%86%8D%E7%B7%A8%20OR%20%E4%B8%AD%E6%9C%9F%E7%B5%8C%E5%96%B6%E8%A8%88%E7%94%BB%29%20when%3A3d&hl=ja&gl=JP&ceid=JP:ja 4
