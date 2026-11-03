@@ -42,5 +42,9 @@ jobs:
           git add inbox _system/matcha/matcha.db
           git diff --cached --quiet && exit 0
           git commit -m "Collect $(date +%F)"
-          for i in 1 2 3; do git pull --rebase -q && git push -q && exit 0; sleep 5; done
+          # 連続 push（サイトの投票など）と競合するので、間隔をばらして 10 回まで粘る
+          for i in $(seq 1 10); do
+            git pull --rebase -q && git push -q && exit 0
+            sleep $((RANDOM % 7 + 2))
+          done
           exit 1
