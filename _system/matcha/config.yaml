@@ -30,6 +30,8 @@ feeds:
   - https://github.com/anthropics/claude-code/releases.atom 3
   - https://zenn.dev/topics/claudecode/feed 5
   - https://zenn.dev/scalar_sol_blog/feed 3   # 書き手 2026-W45 scalar_sol_blog
+  - https://zenn.dev/ojisan_ai_lab/feed 3   # 書き手 2026-W46 ojisan_ai_lab
+  - https://zenn.dev/acerola_jp/feed 3   # 書き手 2026-W46 acerola_jp
   # --- X（旧 Twitter）の話題の投稿：Google News の site:x.com 検索、直近 2 日 ---
   - https://news.google.com/rss/search?q=site%3Ax.com%20%28AI%20OR%20%E7%94%9F%E6%88%90AI%20OR%20Claude%20OR%20ChatGPT%20OR%20Codex%29%20%28%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%20OR%20%E9%96%8B%E7%99%BA%20OR%20%E6%A5%AD%E5%8B%99%20OR%20%E4%BB%95%E4%BA%8B%29%20when%3A2d&hl=ja&gl=JP&ceid=JP:ja 10
   # --- Google News のキーワード検索（1 キーワード = 1 フィード。どのキーワードが効いたかを区別するため分けている）---
@@ -42,7 +44,7 @@ feeds:
   - https://news.google.com/rss/search?q=%22regtech%22%20when%3A3d&hl=en-US&gl=US&ceid=US:en 3
   - https://news.google.com/rss/search?q=%22AI%20agent%20security%22%20when%3A3d&hl=en-US&gl=US&ceid=US:en 4
   - https://news.google.com/rss/search?q=%22Claude%20Code%22%20when%3A3d&hl=en-US&gl=US&ceid=US:en 3   # 2026-10-11 読み手が追加（Claude / Claude Code）
-  - https://news.google.com/rss/search?q=%22AI%20code%20review%22%20when%3A3d&hl=en-US&gl=US&ceid=US:en 4   # 試用 2026-W44
+  - https://news.google.com/rss/search?q=%22coding%20agents%22%20when%3A3d&hl=en-US&gl=US&ceid=US:en 4   # 試用 2026-W46
   # 日本語の検索（hl=ja）。週次レビューの自動入れ替えの対象外（手で管理する）
   - https://news.google.com/rss/search?q=%E9%8A%80%E8%A1%8C%20%28%E7%B5%8C%E5%96%B6%E6%88%A6%E7%95%A5%20OR%20%E7%B5%8C%E5%96%B6%E7%B5%B1%E5%90%88%20OR%20%E5%86%8D%E7%B7%A8%20OR%20%E4%B8%AD%E6%9C%9F%E7%B5%8C%E5%96%B6%E8%A8%88%E7%94%BB%29%20when%3A3d&hl=ja&gl=JP&ceid=JP:ja 4
   - https://news.google.com/rss/search?q=%28%E6%B3%95%E5%8B%99%20OR%20%E3%83%AA%E3%83%BC%E3%82%AC%E3%83%AB%20OR%20%E3%82%B3%E3%83%B3%E3%83%97%E3%83%A9%E3%82%A4%E3%82%A2%E3%83%B3%E3%82%B9%29%20%28%E7%94%9F%E6%88%90AI%20OR%20AI%29%20%28%E9%8A%80%E8%A1%8C%20OR%20%E9%87%91%E8%9E%8D%20OR%20%E4%BC%81%E6%A5%AD%E6%B3%95%E5%8B%99%29%20when%3A3d&hl=ja&gl=JP&ceid=JP:ja 3
